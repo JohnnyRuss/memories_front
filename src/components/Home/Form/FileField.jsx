@@ -1,6 +1,8 @@
+import styles from "./styles/styles.module.css";
+
 export default function FileField({ value, onChange }) {
   return (
-    <div className="post-form__file-field">
+    <div className={styles["post-form__file-field"]}>
       <label htmlFor="image">Select File</label>
 
       {value && (

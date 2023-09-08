@@ -2,5 +2,17 @@
   --app-ballet: #606c38;
   --app-salad: #52b69a;
   --app-blue: #0466c8;
+  --app-blue-shade: #045cb4;
   --app-red: #ef233c;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.no-result__msg {
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  opacity: 0.6;
 }

@@ -1,17 +1,23 @@
+import { useLocation } from "react-router-dom";
+
+import Brand from "./Brand";
+import Toolbar from "./Toolbar";
 import { Container } from "components/layouts";
-import LogoImage from "assets/logo.png";
-import { AppBar, Logo, Typography } from "./styles";
+
+import * as MuiStyled from "./styles/styles";
 
 export default function Navigation() {
+  const { pathname } = useLocation();
+
+  if (pathname.startsWith("/auth")) return <></>;
+
+  const user = null;
   return (
     <Container>
-      <AppBar position="static" color="inherit">
-        <Typography variant="h2" align="center">
-          Memories
-        </Typography>
-
-        <Logo src={LogoImage} alt="memories" height="60" width="60" />
-      </AppBar>
+      <MuiStyled.AppBar position="static" color="inherit">
+        <Brand />
+        <Toolbar user={user} />
+      </MuiStyled.AppBar>
     </Container>
   );
 }

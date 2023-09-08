@@ -7,6 +7,10 @@
   gap: 16px;
 }
 
+.post-form__btn-box {
+  width: 100%;
+}
+
 .post-form__file-field {
   width: 100%;
   margin: 10px 0;

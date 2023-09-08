@@ -1,0 +1,14 @@
+.brand_container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  margin-left: 15px;
+}
+
+.user_profile {
+  display: flex;
+  justify-content: center;
+  width: 400px;
+}

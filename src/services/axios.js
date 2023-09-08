@@ -6,4 +6,9 @@ const axiosPublicQuery = axios.create({
   withCredentials: true,
 });
 
-export { axiosPublicQuery };
+const axiosPrivateQuery = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: true,
+});
+
+export { axiosPublicQuery, axiosPrivateQuery };

@@ -1,20 +1,9 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-
-import { getPostsQuery } from "store/thunks/posts.thunk";
-
 import { Grow, Grid } from "@mui/material";
-import Form from "components/Form/Form";
+import Form from "components/Home/Form/Form";
 import Posts from "components/Posts/Posts";
 import { Container } from "components/layouts";
 
-export default function HomePage() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getPostsQuery());
-  }, [dispatch]);
-
+export default function Home() {
   return (
     <Grow in={true}>
       <div>
