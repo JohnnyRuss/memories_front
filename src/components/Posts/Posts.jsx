@@ -15,15 +15,14 @@ export default function Posts() {
 
   return (
     <div>
-      <h1>Posts</h1>
       {status.loading && <Spinner />}
 
-      <Grid container>
+      <Grid container spacing={2} justifyContent="space-between">
         {!status.loading &&
           posts?.[0] &&
           posts.map((post) => (
-            <Grid item key={post._id}>
-              <Post />
+            <Grid key={post._id} item xs={12} sm={6}>
+              <Post post={post} />
             </Grid>
           ))}
 

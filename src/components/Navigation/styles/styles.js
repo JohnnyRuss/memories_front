@@ -10,12 +10,14 @@ export const AppBar = styled(MuiAppBar)(({ theme }) => ({
   margin: "30px 0",
   display: "flex",
   flexDirection: "row",
-  justifyContent: "center",
+  justifyContent: "space-between",
+  paddingLeft: "20px",
   alignItems: "center",
+  background: "#fff",
 }));
 
 export const LogoTypography = styled(MuiTypography)(({ theme }) => ({
-  color: "rgba(0,183,255, 1)",
+  color: theme.palette.app_blue,
 }));
 
 export const Toolbar = styled(MuiToolbar)(({ theme }) => ({

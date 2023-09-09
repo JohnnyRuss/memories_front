@@ -9,6 +9,7 @@
 
 .user_profile {
   display: flex;
-  justify-content: center;
-  width: 400px;
+  justify-content: space-between;
+  gap: 20px;
+  width: max-content;
 }

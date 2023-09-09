@@ -1,28 +1,47 @@
-import { useDispatch } from "react-redux";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
+import {
+  selectEditingPost,
+  selectCreatePostLoadingStatus,
+} from "store/selectors/postSelectors";
+import { selectCurrentUserId } from "store/selectors/authSelectors";
+
+import { useIsAuthenticatedUser } from "hooks/auth";
+import { postActions } from "store/reducers/postsSlice";
+import { createPostQuery, updatePostQuery } from "store/thunks/posts.thunk";
 
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { postValidation } from "utils/validation/postValidation";
 
-import { createPostQuery } from "store/thunks/posts.thunk";
-
-import { TextField, Typography } from "@mui/material";
 import FileField from "./FileField";
+import { Spinner } from "components/layouts";
+import { TextField, Typography } from "@mui/material";
 import * as MuiStyled from "./styles/styles";
 import styles from "./styles/styles.module.css";
 
 export default function Form() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const currentUserId = useSelector(selectCurrentUserId);
+  const status = useSelector(selectCreatePostLoadingStatus);
+
+  const { isAuthenticated } = useIsAuthenticatedUser({
+    checkOnMount: true,
+    redirectUnAuthorized: false,
+  });
+
+  const editingPost = useSelector(selectEditingPost);
+
+  const defaultForm = { title: "", text: "", tags: "", image: "" };
   const form = useForm({
     resolver: zodResolver(postValidation),
-    defaultValues: {
-      creator: "",
-      title: "",
-      text: "",
-      tags: "",
-      image: "",
-    },
+    defaultValues: defaultForm,
   });
 
   const helperTextProps = { sx: { textAlign: "center" } };
@@ -43,14 +62,38 @@ export default function Form() {
     };
   }
 
-  function onSubmit(values) {
-    dispatch(
-      createPostQuery({
-        ...values,
-        tags: values.tags.split("#").filter((part) => part !== ""),
-      })
-    );
+  async function onSubmit(values) {
+    if (!isAuthenticated) return navigate("/auth/sign-in");
+
+    if (Object.values(editingPost)[0]) {
+      await dispatch(
+        updatePostQuery({ params: { postId: editingPost._id }, data: values })
+      ).unwrap();
+
+      form.reset(defaultForm);
+      dispatch(postActions.clearPostToEdit());
+    } else {
+      await dispatch(
+        createPostQuery({
+          ...values,
+          tags: values.tags.split("#").filter((part) => part !== ""),
+          author: currentUserId,
+        })
+      ).unwrap();
+      form.reset();
+    }
   }
+
+  useEffect(() => {
+    if (!Object.values(editingPost)[0]) return;
+
+    form.reset({
+      title: editingPost.title || "",
+      text: editingPost.text || "",
+      tags: editingPost.tags || "",
+      image: editingPost.image || "",
+    });
+  }, [editingPost]);
 
   return (
     <MuiStyled.Paper>
@@ -60,23 +103,11 @@ export default function Form() {
         className={styles["post-form"]}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <Typography variant="h6">Creating a Memory</Typography>
+        {status.loading && <Spinner type="absolute" />}
 
-        <Controller
-          name="creator"
-          control={form.control}
-          render={({ field, fieldState: { error } }) => (
-            <TextField
-              variant="outlined"
-              label="Creator"
-              fullWidth
-              {...form.register("creator")}
-              error={error ? true : false}
-              helperText={error?.message || ""}
-              FormHelperTextProps={helperTextProps}
-            />
-          )}
-        />
+        <Typography variant="h6" sx={{ textAlign: "center", width: "100%" }}>
+          Share your Memory here
+        </Typography>
 
         <Controller
           name="title"
@@ -86,6 +117,7 @@ export default function Form() {
               variant="outlined"
               label="Title"
               fullWidth
+              {...field}
               {...form.register("title")}
               error={error ? true : false}
               helperText={error?.message || ""}
@@ -102,6 +134,9 @@ export default function Form() {
               variant="outlined"
               label="Text"
               fullWidth
+              multiline
+              rows={4}
+              {...field}
               {...form.register("text")}
               error={error ? true : false}
               helperText={error?.message || ""}
@@ -118,6 +153,7 @@ export default function Form() {
               variant="outlined"
               label="Tags"
               fullWidth
+              {...field}
               {...form.register("tags")}
               error={error ? true : false}
               helperText={
@@ -145,23 +181,35 @@ export default function Form() {
             )}
           />
 
-          <MuiStyled.ClearButton
-            variant="contained"
-            size="small"
-            onClick={() => form.reset()}
-            fullWidth
-          >
-            Clear
-          </MuiStyled.ClearButton>
+          {isAuthenticated ? (
+            <>
+              <MuiStyled.ClearButton
+                variant="contained"
+                size="small"
+                onClick={() => form.reset()}
+                fullWidth
+                disabled={status.loading}
+              >
+                Clear
+              </MuiStyled.ClearButton>
 
-          <MuiStyled.SubmitButton
-            variant="contained"
-            size="large"
-            type="submit"
-            fullWidth
-          >
-            Submit
-          </MuiStyled.SubmitButton>
+              <MuiStyled.SubmitButton
+                variant="contained"
+                size="large"
+                type="submit"
+                fullWidth
+                disabled={status.loading}
+              >
+                Submit
+              </MuiStyled.SubmitButton>
+            </>
+          ) : (
+            <p className={styles["no-auth__msg"]}>
+              Please&nbsp;
+              <Link to="/auth/sign-in">sign in</Link>
+              &nbsp;first to share your memory
+            </p>
+          )}
         </div>
       </form>
     </MuiStyled.Paper>

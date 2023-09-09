@@ -8,7 +8,9 @@ export const registerUserQuery = createAsyncThunk(
       const { data } = await axiosPublicQuery.post("/auth/register", args);
       return { user: data.user, accessToken: data.accessToken };
     } catch (error) {
-      return rejectWithValue(error?.response.data || error.message);
+      return rejectWithValue({
+        message: error?.response.data || error?.message || error,
+      });
     }
   }
 );
@@ -22,7 +24,7 @@ export const loginUserQuery = createAsyncThunk(
     } catch (error) {
       console.log(error);
       return rejectWithValue({
-        message: error?.response?.data || error.message || error,
+        message: error?.response?.data || error?.message || error,
       });
     }
   }
@@ -34,7 +36,9 @@ export const logoutUserQuery = createAsyncThunk(
     try {
       await axiosPublicQuery.post("/auth/logout");
     } catch (error) {
-      return rejectWithValue(error?.response.data || error.message || error);
+      return rejectWithValue({
+        message: error?.response.data || error?.message || error,
+      });
     }
   }
 );

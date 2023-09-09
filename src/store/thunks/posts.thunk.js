@@ -1,14 +1,76 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosPublicQuery } from "services/axios";
+import { axiosPublicQuery, axiosPrivateQuery } from "services/axios";
 
 export const createPostQuery = createAsyncThunk(
   "post/create",
   async (args, { rejectWithValue }) => {
     try {
-      const { data } = await axiosPublicQuery.post("/posts", args);
+      const { data } = await axiosPrivateQuery.post("/posts", args);
       return data;
     } catch (error) {
-      console.log(error);
+      return rejectWithValue({
+        message: error?.response.data || error?.message || error,
+      });
+    }
+  }
+);
+
+export const getPostQuery = createAsyncThunk(
+  "post/get",
+  async (args, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPublicQuery.get(`/posts/${args.postId}`);
+
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        message: error?.response?.data || error?.message || error,
+      });
+    }
+  }
+);
+
+export const updatePostQuery = createAsyncThunk(
+  "post/update",
+  async (args, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivateQuery.put(
+        `/posts/${args.params.postId}`,
+        args.data
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        message: error?.response?.data || error?.message || error,
+      });
+    }
+  }
+);
+
+export const deletePostQuery = createAsyncThunk(
+  "post/delete",
+  async (args, { rejectWithValue }) => {
+    try {
+      await axiosPrivateQuery.delete(`/posts/${args.postId}`);
+      return args.postId;
+    } catch (error) {
+      return rejectWithValue({
+        message: error?.response?.data || error?.message || error,
+      });
+    }
+  }
+);
+
+export const likePostQuery = createAsyncThunk(
+  "post/reaction",
+  async (args, { rejectWithValue }) => {
+    try {
+      await axiosPrivateQuery.patch(`/posts/${args.postId}/reaction`);
+      return args;
+    } catch (error) {
+      return rejectWithValue({
+        message: error?.response?.data || error?.message || error,
+      });
     }
   }
 );
@@ -20,7 +82,9 @@ export const getPostsQuery = createAsyncThunk(
       const { data } = await axiosPublicQuery.get("/posts");
       return data;
     } catch (error) {
-      console.log(error);
+      return rejectWithValue({
+        message: error?.response?.data || error?.message || error,
+      });
     }
   }
 );

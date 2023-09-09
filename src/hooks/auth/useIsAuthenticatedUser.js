@@ -35,6 +35,8 @@ export default function useIsAuthenticatedUser({
       !PUBLIC_ROUTES.some((route) => pathname.match(route))
     )
       navigate(redirectPath || "/", { replace: true });
+
+    return false;
   }
 
   function decodeToken(token) {
@@ -63,6 +65,7 @@ export default function useIsAuthenticatedUser({
       if (decodedToken === false || !isAuthenticatedUser) return stopCheck();
 
       setIsAuthenticated(true);
+
       setLoading(false);
 
       return true;
@@ -77,7 +80,7 @@ export default function useIsAuthenticatedUser({
     (async () => {
       await checkAuthAsync();
     })();
-  }, [isAuthenticatedUser, checkOnMount]);
+  }, [isAuthenticatedUser, checkOnMount, pathname]);
 
   return { loading, isAuthenticated, checkAuthAsync };
 }

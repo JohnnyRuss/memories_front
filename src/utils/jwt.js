@@ -9,5 +9,5 @@ export function removePassport() {
 }
 
 export function getPassport() {
-  localStorage.getItem(MEMORIES_PASSPORT_KEY);
+  return localStorage.getItem(MEMORIES_PASSPORT_KEY) || "";
 }

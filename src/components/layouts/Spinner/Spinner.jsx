@@ -8,6 +8,10 @@ export default function Spinner({ type = "stand" }) {
     </div>
   ) : type === "inline" ? (
     <CircularProgress />
+  ) : type === "absolute" ? (
+    <div className={styles["absolute-spinner"]}>
+      <CircularProgress />
+    </div>
   ) : (
     <></>
   );

@@ -4,3 +4,13 @@
   align-items: center;
   padding: 50px 0;
 }
+
+.absolute-spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 9;
+}

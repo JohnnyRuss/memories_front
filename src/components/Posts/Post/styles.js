@@ -1,52 +1,39 @@
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  Card as MuiCard,
+  CardMedia as MuiCardMedia,
+  CardActions as MuiCardActions,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 
-export default makeStyles({
-  media: {
-    height: 0,
-    paddingTop: "56.25%",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    backgroundBlendMode: "darken",
-  },
-  border: {
-    border: "solid",
-  },
-  fullHeightCard: {
-    height: "100%",
-  },
-  card: {
+export const Card = styled(MuiCard)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  borderRadius: "15px",
+  height: "100%",
+  position: "relative",
+}));
+
+export const CardMedia = styled(MuiCardMedia)(({ theme }) => ({
+  height: 0,
+  paddingTop: "56.25%",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  backgroundBlendMode: "darken",
+}));
+
+export const CardActions = styled(MuiCardActions)(({ theme }) => ({
+  padding: "0 16px 8px 16px",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+
+  "& button": {
     display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    borderRadius: "15px",
-    height: "100%",
-    position: "relative",
+    alignItems: "center",
+    gap: "10px",
   },
-  overlay: {
-    position: "absolute",
-    top: "20px",
-    left: "20px",
-    color: "white",
+
+  "& button span.text": {
+    lineHeight: "1",
   },
-  overlay2: {
-    position: "absolute",
-    top: "20px",
-    right: "20px",
-    color: "white",
-  },
-  grid: {
-    display: "flex",
-  },
-  details: {
-    display: "flex",
-    justifyContent: "space-between",
-    margin: "20px",
-  },
-  title: {
-    padding: "0 16px",
-  },
-  cardActions: {
-    padding: "0 16px 8px 16px",
-    display: "flex",
-    justifyContent: "space-between",
-  },
-});
+}));
