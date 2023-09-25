@@ -17,11 +17,11 @@ export default function Posts() {
     <div>
       {status.loading && <Spinner />}
 
-      <Grid container spacing={2} justifyContent="space-between">
+      <Grid container spacing={2}>
         {!status.loading &&
           posts?.[0] &&
           posts.map((post) => (
-            <Grid key={post._id} item xs={12} sm={6}>
+            <Grid key={post._id} item xs={12} sm={4}>
               <Post post={post} />
             </Grid>
           ))}

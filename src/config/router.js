@@ -1,4 +1,5 @@
 import * as Pages from "pages";
+import { Navigate } from "react-router-dom";
 
 export const RouterHistory = {
   navigate: null,
@@ -9,8 +10,23 @@ export const RouterHistory = {
 export const Router = [
   {
     path: "/",
+    name: "root",
+    Element: <Navigate to="/posts" />,
+  },
+  {
+    path: "/posts",
     name: "home-page",
     Element: <Pages.HomePage />,
+  },
+  {
+    path: "/posts/search",
+    name: "search-page",
+    Element: <Pages.HomePage />,
+  },
+  {
+    path: "/posts/:postId",
+    name: "home-page",
+    Element: <Pages.PostDetailsPage />,
   },
   {
     path: "/auth/sign-in",

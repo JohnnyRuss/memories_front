@@ -22,8 +22,8 @@ export default function Brand() {
         className={styles.logo}
         src={LogoImage}
         alt="memories"
-        height="60"
-        width="60"
+        height="50"
+        width="50"
       />
     </div>
   );

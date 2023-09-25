@@ -88,3 +88,22 @@ export const getPostsQuery = createAsyncThunk(
     }
   }
 );
+
+export const searchPosts = createAsyncThunk(
+  "posts/search",
+  async (args, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPublicQuery.get(
+        `/posts/search?${args.search ? `search=${args.search}` : ""}${
+          args.tags ? `&tags=${args.tags}` : ""
+        }`
+      );
+
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        message: error?.response?.data || error?.message || error,
+      });
+    }
+  }
+);

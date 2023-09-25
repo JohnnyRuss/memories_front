@@ -2,13 +2,13 @@ import {
   Card as MuiCard,
   CardMedia as MuiCardMedia,
   CardActions as MuiCardActions,
+  Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  justifyContent: "space-between",
   borderRadius: "15px",
   height: "100%",
   position: "relative",
@@ -19,6 +19,7 @@ export const CardMedia = styled(MuiCardMedia)(({ theme }) => ({
   paddingTop: "56.25%",
   backgroundColor: "rgba(0, 0, 0, 0.5)",
   backgroundBlendMode: "darken",
+  backgroundPosition: "top",
 }));
 
 export const CardActions = styled(MuiCardActions)(({ theme }) => ({
@@ -26,6 +27,7 @@ export const CardActions = styled(MuiCardActions)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+  marginTop: "auto",
 
   "& button": {
     display: "flex",
@@ -36,4 +38,28 @@ export const CardActions = styled(MuiCardActions)(({ theme }) => ({
   "& button span.text": {
     lineHeight: "1",
   },
+}));
+
+export const CardContentTags = styled(Typography)(({ theme }) => ({
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
+  lineClamp: 1,
+  WebkitLineClamp: 1,
+}));
+
+export const CardContentTitle = styled(Typography)(({ theme }) => ({
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
+  lineClamp: 2,
+  WebkitLineClamp: 2,
+}));
+
+export const CardContentDescription = styled(Typography)(({ theme }) => ({
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
+  lineClamp: 4,
+  WebkitLineClamp: 4,
 }));

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postActions } from "store/reducers/postsSlice.js";
 import { deletePostQuery, likePostQuery } from "store/thunks/posts.thunk.js";
 import { selectDeletePostLoadingStatus } from "store/selectors/postSelectors.js";
+
 import useIsCurrentUser from "hooks/auth/useIsCurrentUser.js";
 import { useDialogContext } from "providers/DialogProvider.jsx";
 
@@ -43,7 +44,9 @@ export default function Post({ post }) {
       <MuiStyled.CardMedia image={post.image} title={post.title} />
 
       <div className={styles.overlay}>
-        <Typography variant="h6">{post.author.name}</Typography>
+        <Typography variant="h6" textTransform="capitalize">
+          {post.author.name}
+        </Typography>
         <Typography variant="body2">
           {moment(post.createdAt).fromNow()}
         </Typography>
@@ -58,26 +61,35 @@ export default function Post({ post }) {
       )}
 
       <div className={styles.details}>
-        <Typography variant="body2" component="h2">
+        <MuiStyled.CardContentTags
+          variant="body2"
+          component="h2"
+          title={post.tags.map((tag) => `#${tag} `)}
+        >
           {post.tags.map((tag) => `#${tag} `)}
-        </Typography>
+        </MuiStyled.CardContentTags>
       </div>
 
-      <Typography
+      <MuiStyled.CardContentTitle
         variant="h5"
         component="h2"
         gutterBottom
         sx={{
           padding: "0 16px",
         }}
+        title={post.title}
       >
         {post.title}
-      </Typography>
+      </MuiStyled.CardContentTitle>
 
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <MuiStyled.CardContentDescription
+          variant="body2"
+          color="textSecondary"
+          component="p"
+        >
           {post.text}
-        </Typography>
+        </MuiStyled.CardContentDescription>
       </CardContent>
 
       {currentUserId && (

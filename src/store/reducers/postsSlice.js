@@ -149,6 +149,18 @@ const postsSlice = createSlice({
         console.log(payload);
         state.postsLoadingStatus = status("fail", payload.message);
       });
+    builder
+      .addCase(postsAPI.searchPosts.pending, (state) => {
+        state.postsLoadingStatus = status("pending");
+      })
+      .addCase(postsAPI.searchPosts.fulfilled, (state, { payload }) => {
+        state.posts = payload;
+        state.postsLoadingStatus = status("success");
+      })
+      .addCase(postsAPI.searchPosts.rejected, (state, { payload }) => {
+        console.log(payload);
+        state.postsLoadingStatus = status("fail", payload.message);
+      });
   },
 });
 
