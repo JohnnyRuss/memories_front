@@ -3,6 +3,7 @@ import {
   CardMedia as MuiCardMedia,
   CardActions as MuiCardActions,
   Typography,
+  ButtonBase as MuiButtonBase,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -38,6 +39,11 @@ export const CardActions = styled(MuiCardActions)(({ theme }) => ({
   "& button span.text": {
     lineHeight: "1",
   },
+}));
+
+export const ButtonBase = styled(MuiButtonBase)(({ theme }) => ({
+  display: "block",
+  textAlign: "initial",
 }));
 
 export const CardContentTags = styled(Typography)(({ theme }) => ({

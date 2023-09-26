@@ -1,0 +1,41 @@
+.card {
+  display: flex;
+  width: 100%;
+}
+
+.section {
+  border-radius: 20px;
+  margin: 10px;
+  flex: 1;
+}
+
+.imageSection {
+  margin-left: 20px;
+}
+
+.media {
+  border-radius: 20px;
+  object-fit: cover;
+  width: 100%;
+  max-width: 600px;
+  max-height: 500px;
+}
+
+.recommendedPosts {
+  display: flex;
+}
+
+@media (max-width: 500px) {
+  .card {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  .imageSection {
+    margin-left: 0;
+  }
+
+  .recommendedPosts {
+    flex-direction: column;
+  }
+}

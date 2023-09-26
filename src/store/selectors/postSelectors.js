@@ -6,6 +6,12 @@ const selectedPostsLoadingStatus = ({ posts }) => ({
   message: posts.postsLoadingStatus.message,
 });
 
+const selectedPostLoadingStatus = ({ posts }) => ({
+  loading: posts.postLoadingStatus.loading,
+  error: posts.postLoadingStatus.error,
+  message: posts.postLoadingStatus.message,
+});
+
 const selectedCreatePostLoadingStatus = ({ posts }) => ({
   loading: posts.createPostLoadingStatus.loading,
   error: posts.createPostLoadingStatus.error,
@@ -21,6 +27,12 @@ const selectedDeletePostLoadingStatus = ({ posts }) => ({
   },
 });
 
+const selectedPagination = ({ posts }) => ({
+  postsTotal: posts.postsTotal,
+  currentPage: posts.currentPage,
+  numberOfPages: posts.numberOfPages,
+});
+
 const selectedEditingPost = ({ posts }) => ({
   _id: posts.editingPost._id,
   title: posts.editingPost.title,
@@ -31,8 +43,15 @@ const selectedEditingPost = ({ posts }) => ({
 
 export const selectPosts = ({ posts }) => posts.posts;
 
+export const selectPost = ({ posts }) => posts.post;
+
 export const selectPostsLoadingStatus = createSelector(
   selectedPostsLoadingStatus,
+  (status) => status
+);
+
+export const selectPostLoadingStatus = createSelector(
+  selectedPostLoadingStatus,
   (status) => status
 );
 
@@ -49,4 +68,9 @@ export const selectDeletePostLoadingStatus = createSelector(
 export const selectEditingPost = createSelector(
   selectedEditingPost,
   (post) => post
+);
+
+export const selectPagination = createSelector(
+  selectedPagination,
+  (pagination) => pagination
 );

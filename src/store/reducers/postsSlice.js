@@ -8,6 +8,10 @@ import * as postsAPI from "store/thunks/posts.thunk";
 const initialState = {
   posts: [],
 
+  postsTotal: "",
+  currentPage: "",
+  numberOfPages: "",
+
   post: null,
 
   editingPost: {
@@ -20,6 +24,7 @@ const initialState = {
 
   deletingPostId: "",
 
+  postLoadingStatus: initialStatus,
   postsLoadingStatus: initialStatus,
   createPostLoadingStatus: initialStatus,
   deletePostLoadingStatus: initialStatus,
@@ -64,15 +69,15 @@ const postsSlice = createSlice({
     // GET SINGLE POST
     builder
       .addCase(postsAPI.getPostQuery.pending, (state) => {
-        state.createPostLoadingStatus = status("pending");
+        state.postLoadingStatus = status("pending");
       })
       .addCase(postsAPI.getPostQuery.fulfilled, (state, { payload }) => {
         state.post = payload;
-        state.createPostLoadingStatus = status("success");
+        state.postLoadingStatus = status("success");
       })
       .addCase(postsAPI.getPostQuery.rejected, (state, { payload }) => {
         console.log(payload);
-        state.createPostLoadingStatus = status("fail", payload.message);
+        state.postLoadingStatus = status("fail", payload.message);
       });
     // UPDATE POST
     builder
@@ -142,7 +147,13 @@ const postsSlice = createSlice({
         state.postsLoadingStatus = status("pending");
       })
       .addCase(postsAPI.getPostsQuery.fulfilled, (state, { payload }) => {
-        state.posts = payload;
+        const { data, total, currentPage, numberOfPages } = payload;
+
+        state.posts = data;
+        state.postsTotal = total;
+        state.currentPage = currentPage;
+        state.numberOfPages = numberOfPages;
+
         state.postsLoadingStatus = status("success");
       })
       .addCase(postsAPI.getPostsQuery.rejected, (state, { payload }) => {
@@ -154,7 +165,13 @@ const postsSlice = createSlice({
         state.postsLoadingStatus = status("pending");
       })
       .addCase(postsAPI.searchPosts.fulfilled, (state, { payload }) => {
-        state.posts = payload;
+        const { data, total, currentPage, numberOfPages } = payload;
+
+        state.posts = data;
+        state.postsTotal = total;
+        state.currentPage = currentPage;
+        state.numberOfPages = numberOfPages;
+
         state.postsLoadingStatus = status("success");
       })
       .addCase(postsAPI.searchPosts.rejected, (state, { payload }) => {

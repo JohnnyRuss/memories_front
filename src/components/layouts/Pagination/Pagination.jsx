@@ -1,15 +1,27 @@
-import { Pagination as MuiPagination, PaginationItem } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectPagination } from "store/selectors/postSelectors";
 
-export default function Pagination(props) {
+import { Pagination as MuiPagination, PaginationItem } from "@mui/material";
+
+export default function Pagination({ page }) {
+  const pagination = useSelector(selectPagination);
+
+  const query = new URLSearchParams(window.location.search);
+  query.delete("page");
+
   return (
     <MuiPagination
-      count={5}
-      page={1}
+      count={+pagination.numberOfPages}
+      page={+pagination.currentPage}
       variant="outlined"
       color="primary"
       renderItem={(item) => (
-        <PaginationItem {...item} component={Link} to={`/posts?page=${1}`} />
+        <PaginationItem
+          {...item}
+          component={Link}
+          to={`/posts?page=${item.page}${query ? `&${query}` : ""}`}
+        />
       )}
     />
   );

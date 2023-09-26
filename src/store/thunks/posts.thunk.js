@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosPublicQuery, axiosPrivateQuery } from "services/axios";
+import { POSTS_PER_PAGE } from "config/config";
 
 export const createPostQuery = createAsyncThunk(
   "post/create",
@@ -79,7 +80,11 @@ export const getPostsQuery = createAsyncThunk(
   "post/getAll",
   async (args, { rejectWithValue }) => {
     try {
-      const { data } = await axiosPublicQuery.get("/posts");
+      const { data } = await axiosPublicQuery.get(
+        `/posts?page=${args.page}&limit=${POSTS_PER_PAGE}&${
+          args.search ? `search=${args.search}` : ""
+        }${args.tags ? `&tags=${args.tags}` : ""}`
+      );
       return data;
     } catch (error) {
       return rejectWithValue({
@@ -94,9 +99,9 @@ export const searchPosts = createAsyncThunk(
   async (args, { rejectWithValue }) => {
     try {
       const { data } = await axiosPublicQuery.get(
-        `/posts/search?${args.search ? `search=${args.search}` : ""}${
-          args.tags ? `&tags=${args.tags}` : ""
-        }`
+        `/posts/search?page=${args.page}&limit=${POSTS_PER_PAGE}&${
+          args.search ? `search=${args.search}` : ""
+        }${args.tags ? `&tags=${args.tags}` : ""}`
       );
 
       return data;

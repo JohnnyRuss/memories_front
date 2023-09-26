@@ -1,8 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-
-import { searchPosts } from "store/thunks/posts.thunk";
 
 import { Grow, Grid, TextField, Button } from "@mui/material";
 import { Container, Pagination } from "components/layouts";
@@ -22,19 +19,21 @@ function useQuery() {
 }
 
 export default function Home() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [search, setSearch] = useState("");
-  const [tags, setTags] = useState([]);
 
   const query = useQuery();
   const page = query.get("page") || 1;
   const searchQuery = query.get("search");
   const tagsQuery = query.get("tags");
 
+  const [search, setSearch] = useState(searchQuery || "");
+  const [tags, setTags] = useState(tagsQuery?.split(",") || []);
+
   function onSearch() {
     if (!search.trim() && !tags[0]) return navigate("/");
+
+    query.delete("page");
+    query.append("page", 1);
 
     if (search) {
       if (searchQuery) query.delete("search");
@@ -45,8 +44,6 @@ export default function Home() {
       if (tagsQuery) query.delete("tags");
       query.append("tags", tags.join(","));
     }
-
-    dispatch(searchPosts({ search, tags: tags.join(",") }));
 
     navigate(`/posts/search?${query.toString()}`);
   }
@@ -64,29 +61,35 @@ export default function Home() {
             <Grid item xs={12} sm={6} md={8}>
               <Posts />
             </Grid>
-            <Grid item xs={12} sm={6} md={4} position="sticky" top="0">
-              <MuiStyled.AppBar position="static" color="inherit">
-                <TextField
-                  name="search"
-                  label="Search Memories"
-                  variant="outlined"
-                  fullWidth
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
+            <Grid item xs={12} sm={6} md={4}>
+              <aside className="sidebar">
+                <MuiStyled.AppBar position="static" color="inherit">
+                  <TextField
+                    name="search"
+                    label="Search Memories"
+                    variant="outlined"
+                    fullWidth
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
 
-                <TagsInput value={tags} onChange={(tags) => setTags(tags)} />
+                  <TagsInput value={tags} onChange={(tags) => setTags(tags)} />
 
-                <Button onClick={onSearch} color="primary" variant="contained">
-                  Search
-                </Button>
-              </MuiStyled.AppBar>
+                  <Button
+                    onClick={onSearch}
+                    color="primary"
+                    variant="contained"
+                  >
+                    Search
+                  </Button>
+                </MuiStyled.AppBar>
 
-              <Form />
+                <Form />
 
-              <MuiStyled.PaginationPaper elevation={6}>
-                <Pagination />
-              </MuiStyled.PaginationPaper>
+                <MuiStyled.PaginationPaper elevation={6}>
+                  <Pagination page={page} />
+                </MuiStyled.PaginationPaper>
+              </aside>
             </Grid>
           </Grid>
         </Container>
