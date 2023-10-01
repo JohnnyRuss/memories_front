@@ -1,12 +1,17 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+
+import { postActions } from "store/reducers/postsSlice";
 
 import { Grow, Grid, TextField, Button } from "@mui/material";
 import { Container, Pagination } from "components/layouts";
 
-import TagsInput from "react-tagsinput";
-import "react-tagsinput/react-tagsinput.css";
 import "./home.css";
+import "react-tagsinput/react-tagsinput.css";
+
+import TagsInput from "react-tagsinput";
 
 import Posts from "components/Posts/Posts";
 import Form from "components/Home/Form/Form";
@@ -19,6 +24,7 @@ function useQuery() {
 }
 
 export default function Home() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const query = useQuery();
@@ -47,6 +53,12 @@ export default function Home() {
 
     navigate(`/posts/search?${query.toString()}`);
   }
+
+  useEffect(() => {
+    return () => {
+      dispatch(postActions.resetPostDetails());
+    };
+  }, []);
 
   return (
     <Grow in={true}>

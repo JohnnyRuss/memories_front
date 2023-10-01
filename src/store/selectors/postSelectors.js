@@ -41,7 +41,10 @@ const selectedEditingPost = ({ posts }) => ({
   image: posts.editingPost.image,
 });
 
-export const selectPosts = ({ posts }) => posts.posts;
+export const selectPosts = ({ posts }) =>
+  posts.post
+    ? posts.posts.filter((p) => p._id !== posts.post._id)
+    : posts.posts;
 
 export const selectPost = ({ posts }) => posts.post;
 

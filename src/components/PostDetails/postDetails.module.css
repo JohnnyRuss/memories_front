@@ -3,10 +3,10 @@
   width: 100%;
 }
 
-.section {
+.postDetailsSection {
   border-radius: 20px;
-  margin: 10px;
   flex: 1;
+  margin: 10px;
 }
 
 .imageSection {
@@ -21,8 +21,43 @@
   max-height: 500px;
 }
 
+.recommendedPostsSection {
+  /* margin-top: auto; */
+}
+
 .recommendedPosts {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.relatedPostCard {
+  cursor: pointer;
+  max-width: 300px;
+  aspect-ratio: 1/1;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.relatedPostCardImage {
+  position: relative;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.relatedPostDetailsBox {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
 }
 
 @media (max-width: 500px) {
@@ -33,9 +68,39 @@
 
   .imageSection {
     margin-left: 0;
+    order: 1;
+  }
+
+  .postDetailsSection {
+    order: 2;
   }
 
   .recommendedPosts {
-    flex-direction: column;
+    justify-items: center;
+    grid-template-columns: repeat(auto-fit, 1fr);
+  }
+
+  .relatedPostCard {
+    min-width: 100%;
+    aspect-ratio: none;
+  }
+}
+
+@media (hover: hover) {
+  .relatedPostDetailsBox {
+    height: 0;
+    transition: height 0.3s ease;
+  }
+
+  .relatedPostCard:hover .relatedPostDetailsBox {
+    height: 35%;
+    padding: 10px;
+  }
+}
+
+@media (hover: none) {
+  .relatedPostDetailsBox {
+    height: 30%;
+    padding: 10px;
   }
 }

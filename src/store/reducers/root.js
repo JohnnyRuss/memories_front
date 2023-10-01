@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 
 import postsReducer from "./postsSlice";
 import authReducer from "./authSlice";
+import commentsReducer from "./commentsSlice";
 
 const authPersistConfig = {
   storage,
@@ -16,6 +17,7 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 const rootReducer = combineReducers({
   posts: postsReducer,
   auth: persistedAuthReducer,
+  comments: commentsReducer,
 });
 
 export default rootReducer;

@@ -51,6 +51,11 @@ const postsSlice = createSlice({
     setDeletingPost(state, { payload }) {
       state.deletingPostId = payload;
     },
+
+    resetPostDetails(state) {
+      state.post = null;
+      state.posts = [];
+    },
   },
   extraReducers: (builder) => {
     // CREATE POST

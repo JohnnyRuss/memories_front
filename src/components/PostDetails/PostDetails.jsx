@@ -1,29 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
   selectPost,
-  selectPosts,
   selectPostLoadingStatus,
-  selectPostsLoadingStatus,
 } from "store/selectors/postSelectors";
 import { getPostsQuery } from "store/thunks/posts.thunk";
+import { postActions } from "store/reducers/postsSlice";
 
-import styles from "./postDetails.module.css";
+import { Spinner, Container } from "components/layouts";
 import PostImage from "./components/PostImage";
 import PostContent from "./components/PostContent";
-import { Spinner, Container } from "components/layouts";
-import { Paper, Typography, Divider } from "@mui/material";
-import { useEffect } from "react";
+import RelatedPosts from "./components/RelatedPosts";
+import Comments from "./components/comments/Comments";
+
+import { Divider } from "@mui/material";
+import styles from "./postDetails.module.css";
+import * as MuiStyled from "./PostDetails.styled";
 
 export default function PostDetails() {
   const dispatch = useDispatch();
 
   const singlePostStatus = useSelector(selectPostLoadingStatus);
-  const relatedPostsStatus = useSelector(selectPostsLoadingStatus);
 
   const post = useSelector(selectPost);
-  const relatedPosts = useSelector(selectPosts);
 
   useEffect(() => {
     if (!post) return;
@@ -36,61 +37,36 @@ export default function PostDetails() {
     );
   }, [post]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(postActions.resetPostDetails());
+    };
+  }, []);
+
   return (
     <Container>
-      <Paper
-        style={{ padding: "20px", borderRadius: "15px", minHeight: "90vh" }}
-        elevation={6}
-      >
-        {singlePostStatus.loading && <Spinner />}
+      <MuiStyled.Paper elevation={6}>
+        {singlePostStatus.loading ? (
+          <Spinner />
+        ) : post ? (
+          <>
+            <div className={styles.card}>
+              <PostContent post={post} />
+              <PostImage image={post.image} title={post.title} />
+            </div>
 
-        {post && (
-          <div className={styles.card}>
-            <PostContent post={post} />
-            <PostImage image={post.image} title={post.title} />
-          </div>
+            <Divider style={{ margin: "20px 0" }} />
+          </>
+        ) : (
+          <></>
         )}
 
-        <div className={styles.section}>
-          {relatedPostsStatus.loading && <Spinner />}
+        <Comments loading={singlePostStatus.loading} postId={post?._id || ""} />
 
-          {relatedPosts[0] && (
-            <>
-              <Typography gutterBottom variant="h5">
-                You might also like:
-              </Typography>
-              <Divider />
-              <div className={styles.recommendedPosts}>
-                {relatedPosts.map((relatedPost) => (
-                  <div
-                    style={{ margin: "20px", cursor: "pointer" }}
-                    // onClick={() => openPost(_id)}
-                    key={relatedPost._id}
-                  >
-                    <Typography gutterBottom variant="h6">
-                      {relatedPost.title}
-                    </Typography>
-                    <Typography gutterBottom variant="subtitle2">
-                      {relatedPost.author.name}
-                    </Typography>
-                    <Typography gutterBottom variant="subtitle2">
-                      {relatedPost.text}
-                    </Typography>
-                    <Typography gutterBottom variant="subtitle1">
-                      Likes: {relatedPost.likes.length}
-                    </Typography>
-                    <img
-                      src={relatedPost.image}
-                      width="200px"
-                      alt={relatedPost.title}
-                    />
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      </Paper>
+        <Divider style={{ margin: "20px 0" }} />
+
+        <RelatedPosts />
+      </MuiStyled.Paper>
     </Container>
   );
 }

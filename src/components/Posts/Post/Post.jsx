@@ -10,7 +10,7 @@ import useIsCurrentUser from "hooks/auth/useIsCurrentUser.js";
 import { useDialogContext } from "providers/DialogProvider.jsx";
 
 import { Spinner } from "components/layouts";
-import { CardContent, Button, Typography, ButtonBase } from "@mui/material";
+import { CardContent, Button, Typography } from "@mui/material";
 import { ThumbUpAlt, Delete, Upgrade } from "@mui/icons-material";
 import * as MuiStyled from "./styles.js";
 import styles from "./styles.module.css";
