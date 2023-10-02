@@ -11,7 +11,12 @@ import { useDialogContext } from "providers/DialogProvider.jsx";
 
 import { Spinner } from "components/layouts";
 import { CardContent, Button, Typography } from "@mui/material";
-import { ThumbUpAlt, Delete, Upgrade } from "@mui/icons-material";
+import {
+  ThumbUpAlt,
+  ThumbUpAltOutlined,
+  Delete,
+  Upgrade,
+} from "@mui/icons-material";
 import * as MuiStyled from "./styles.js";
 import styles from "./styles.module.css";
 
@@ -101,7 +106,11 @@ export default function Post({ post }) {
       {currentUserId && (
         <MuiStyled.CardActions>
           <Button size="small" onClick={onReaction}>
-            <ThumbUpAlt />
+            {post.likes.includes(currentUserId) ? (
+              <ThumbUpAlt />
+            ) : (
+              <ThumbUpAltOutlined />
+            )}
             <span className="text">like {post.likeCount}</span>
           </Button>
           {isCurrentUser && (

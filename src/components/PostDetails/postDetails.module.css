@@ -9,6 +9,15 @@
   margin: 10px;
 }
 
+.postCreationDate {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 14px;
+}
+
+.postAuthorName {
+  text-transform: capitalize;
+}
+
 .imageSection {
   margin-left: 20px;
 }

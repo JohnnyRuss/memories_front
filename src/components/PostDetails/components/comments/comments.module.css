@@ -5,11 +5,14 @@
 }
 
 .commentsListContainer {
-  width: 50%;
+  flex: 1;
+}
+
+.commentsListContainer.halfWidth {
   margin-right: 50px;
 }
 
-.commentsInnerContainer {
+.commentsListInnerContainer {
   height: 200px;
   overflow-y: auto;
   width: 100%;
@@ -20,24 +23,60 @@
   gap: 15px;
 }
 
-.commentsInnerContainer li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.commentsInnerContainer::-webkit-scrollbar {
+.commentsListInnerContainer::-webkit-scrollbar {
   width: 11px;
 }
 
-.commentsInnerContainer::-webkit-scrollbar-thumb {
+.commentsListInnerContainer::-webkit-scrollbar-thumb {
   background: #111;
   border-radius: 1rem;
 }
 
-.commentsInnerContainer::-webkit-scrollbar-track {
+.commentsListInnerContainer::-webkit-scrollbar-track {
   background: #999;
   border-radius: 1rem;
+}
+
+.commentsListItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+.commentsListItemContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.commentsListItemContentFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 5px;
+}
+
+.commentsListItemContentFooter span {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+}
+
+.commentsListItemContentFooterActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.commentsListItemContentFooterActions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.commentsListItemContentFooterActions button,
+.commentsListItemContentFooterActions button:active,
+.commentsListItemContentFooterActions button:focus {
+  outline: none;
 }
 
 .writeCommentBox {
