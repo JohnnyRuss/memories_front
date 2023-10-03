@@ -3,47 +3,42 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { postActions } from "store/reducers/postsSlice.js";
-import { deletePostQuery, likePostQuery } from "store/thunks/posts.thunk.js";
 import { selectDeletePostLoadingStatus } from "store/selectors/postSelectors.js";
 
+import { usePostQuery } from "hooks/api";
 import useIsCurrentUser from "hooks/auth/useIsCurrentUser.js";
-import { useDialogContext } from "providers/DialogProvider.jsx";
 
-import { Spinner } from "components/layouts";
-import { CardContent, Button, Typography } from "@mui/material";
 import {
   ThumbUpAlt,
   ThumbUpAltOutlined,
   Delete,
   Upgrade,
 } from "@mui/icons-material";
-import * as MuiStyled from "./styles.js";
-import styles from "./styles.module.css";
+import { Spinner } from "components/layouts";
+import { CardContent, Button, Typography } from "@mui/material";
 
-export default function Post({ post }) {
+import * as MuiStyled from "./PostCard.styled";
+import styles from "./postCard.module.css";
+
+export default function PostCard({ post }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { onOpenDialog } = useDialogContext();
   const { deletingPostId, status } = useSelector(selectDeletePostLoadingStatus);
 
   const { isCurrentUser, currentUserId } = useIsCurrentUser(post.author._id);
 
-  const onEdit = () => dispatch(postActions.setPostToEdit(post));
+  const { onDelete, onReaction } = usePostQuery(post._id);
 
-  const onDelete = () => {
-    dispatch(postActions.setDeletingPost(post._id));
-    onOpenDialog({
-      title: "Delete Post",
-      message: "Are you sure you want to delete this post ?",
-      onConfirm: () => dispatch(deletePostQuery({ postId: post._id })),
-    });
+  const onEdit = (e) => {
+    e.stopPropagation();
+    dispatch(postActions.setPostToEdit(post));
   };
 
-  const onReaction = () =>
-    dispatch(likePostQuery({ postId: post._id, currentUserId }));
-
-  const onOpenPost = () => navigate(`/posts/${post._id}`);
+  const onOpenPost = (e) => {
+    e.stopPropagation();
+    navigate(`/posts/${post._id}`);
+  };
 
   return (
     <MuiStyled.Card>
@@ -64,7 +59,12 @@ export default function Post({ post }) {
 
         {isCurrentUser && (
           <div className={styles["overlay_secondary"]}>
-            <Button size="small" onClick={onEdit}>
+            <Button
+              size="small"
+              onClick={onEdit}
+              title="update memory"
+              variant="contained"
+            >
               <Upgrade />
             </Button>
           </div>
@@ -114,7 +114,7 @@ export default function Post({ post }) {
             <span className="text">like {post.likeCount}</span>
           </Button>
           {isCurrentUser && (
-            <Button size="small" onClick={onDelete}>
+            <Button size="small" onClick={onDelete} color="error">
               <Delete />
               <span className="text">delete</span>
             </Button>

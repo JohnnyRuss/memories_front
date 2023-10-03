@@ -7,6 +7,8 @@
   gap: 16px;
   padding: 15px;
   position: relative;
+  background: #fff;
+  border-radius: 5px;
 }
 
 .post-form__btn-box {

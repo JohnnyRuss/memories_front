@@ -41,7 +41,6 @@ export const deleteCommentQuery = createAsyncThunk(
   async (args, { rejectWithValue }) => {
     try {
       await axiosPrivateQuery.delete(`/comments/${args.commentId}`);
-
       return args;
     } catch (error) {
       return rejectWithValue({

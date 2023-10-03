@@ -1,4 +1,4 @@
-import styles from "../postDetails.module.css";
+import styles from "../../postDetails.module.css";
 
 export default function PostImage({ image, title }) {
   return (

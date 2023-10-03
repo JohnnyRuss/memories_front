@@ -1,12 +1,9 @@
-import { useDialogContext } from "providers/DialogProvider";
+import CommentActions from "./CommentActions";
+import { Typography, Avatar } from "@mui/material";
 
-import { Typography, Avatar, Button } from "@mui/material";
-import { ThumbUpAlt, ThumbUpAltOutlined, Delete } from "@mui/icons-material";
 import styles from "./comments.module.css";
 
 export default function Comment({ comment, isAuthenticated }) {
-  const { onOpenDialog } = useDialogContext();
-
   return (
     <li className={styles.commentsListItem}>
       <Avatar alt="user" src="">
@@ -28,25 +25,13 @@ export default function Comment({ comment, isAuthenticated }) {
             }).format(new Date(comment.createdAt))}
           </span>
 
-          {isAuthenticated && (
-            <div className={styles.commentsListItemContentFooterActions}>
-              <Button title="like" color="primary">
-                <ThumbUpAltOutlined />
-              </Button>
-              <Button
-                color="error"
-                title="delete"
-                onClick={() =>
-                  onOpenDialog({
-                    title: "Delete Comment",
-                    message: "Are you sure you want to delete this comment ?",
-                  })
-                }
-              >
-                <Delete />
-              </Button>
-            </div>
-          )}
+          <CommentActions
+            isAuthenticated={isAuthenticated}
+            commentId={comment._id}
+            authorId={comment.author._id}
+            likes={comment.likes}
+            likesCount={comment.likesCount}
+          />
         </div>
       </div>
     </li>

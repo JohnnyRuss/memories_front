@@ -82,5 +82,9 @@ export default function useIsAuthenticatedUser({
     })();
   }, [isAuthenticatedUser, checkOnMount, pathname]);
 
-  return { loading, isAuthenticated, checkAuthAsync };
+  return {
+    loading,
+    isAuthenticated,
+    checkAuthAsync,
+  };
 }

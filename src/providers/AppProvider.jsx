@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { RouterHistory } from "config/router";
 import { useRestrictAuthorized } from "hooks/auth";
 import DialogProvider from "./DialogProvider";
+import ModalProvider from "./ModalProvider";
 
 const AppContext = createContext({});
 
@@ -15,7 +16,9 @@ export default function AppProvider({ children }) {
 
   return (
     <AppContext.Provider value={{}}>
-      <DialogProvider>{children}</DialogProvider>
+      <ModalProvider>
+        <DialogProvider>{children}</DialogProvider>
+      </ModalProvider>
     </AppContext.Provider>
   );
 }

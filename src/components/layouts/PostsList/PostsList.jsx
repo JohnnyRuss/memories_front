@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 import { Spinner } from "components/layouts";
 
-import Post from "./Post/Post";
+import { PostCard } from "components/layouts";
 
 export default function Posts() {
   const posts = useSelector(selectPosts);
@@ -22,7 +22,7 @@ export default function Posts() {
           posts?.[0] &&
           posts.map((post) => (
             <Grid key={post._id} item xs={12} sm={4}>
-              <Post post={post} />
+              <PostCard post={post} />
             </Grid>
           ))}
 

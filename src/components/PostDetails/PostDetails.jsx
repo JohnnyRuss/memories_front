@@ -10,13 +10,11 @@ import { getPostsQuery } from "store/thunks/posts.thunk";
 import { postActions } from "store/reducers/postsSlice";
 
 import { Spinner, Container } from "components/layouts";
-import PostImage from "./components/PostImage";
-import PostContent from "./components/PostContent";
+import PostContent from "./components/content/PostContent";
 import RelatedPosts from "./components/RelatedPosts";
 import Comments from "./components/comments/Comments";
 
 import { Divider } from "@mui/material";
-import styles from "./postDetails.module.css";
 import * as MuiStyled from "./PostDetails.styled";
 
 export default function PostDetails() {
@@ -50,11 +48,7 @@ export default function PostDetails() {
           <Spinner />
         ) : post ? (
           <>
-            <div className={styles.card}>
-              <PostContent post={post} />
-              <PostImage image={post.image} title={post.title} />
-            </div>
-
+            <PostContent post={post} />
             <Divider style={{ margin: "20px 0" }} />
           </>
         ) : (

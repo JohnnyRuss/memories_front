@@ -53,6 +53,9 @@ const commentsSlice = createSlice({
       .addCase(
         commentsAPI.deleteCommentQuery.fulfilled,
         (state, { payload }) => {
+          state.comments = state.comments.filter(
+            (comment) => comment._id !== payload.commentId
+          );
           state.modifyCommentStatus = status("success");
         }
       )
@@ -67,7 +70,13 @@ const commentsSlice = createSlice({
       .addCase(commentsAPI.reactOnCommentQuery.pending, (state) => {})
       .addCase(
         commentsAPI.reactOnCommentQuery.fulfilled,
-        (state, { payload }) => {}
+        (state, { payload }) => {
+          const commentIndex = state.comments.findIndex(
+            (comment) => comment._id === payload._id
+          );
+
+          state.comments[commentIndex] = payload;
+        }
       )
       .addCase(
         commentsAPI.reactOnCommentQuery.rejected,

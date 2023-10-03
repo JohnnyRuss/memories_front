@@ -17,7 +17,9 @@ export default function Comments({ loading, postId }) {
         <CommentsList isAuthenticated={isAuthenticated} ref={commentRef} />
       )}
 
-      {isAuthenticated && <WriteComment postId={postId} />}
+      {isAuthenticated && (
+        <WriteComment postId={postId} commentRef={commentRef} />
+      )}
     </div>
   );
 }

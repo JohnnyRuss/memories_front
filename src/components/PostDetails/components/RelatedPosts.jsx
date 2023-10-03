@@ -20,7 +20,7 @@ export default function RelatedPosts(props) {
   const relatedPosts = useSelector(selectPosts);
 
   return (
-    <section className={styles.recommendedPostsSection}>
+    <section>
       {relatedPostsStatus.loading ? (
         <Spinner />
       ) : (
@@ -30,7 +30,7 @@ export default function RelatedPosts(props) {
           </Typography>
           <Divider />
           {relatedPosts[0] ? (
-            <div className={styles.recommendedPosts}>
+            <div className={styles.relatedPosts}>
               {relatedPosts.map((relatedPost) => (
                 <div
                   className={styles.relatedPostCard}

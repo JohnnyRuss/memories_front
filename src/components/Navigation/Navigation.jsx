@@ -14,7 +14,7 @@ export default function Navigation() {
   const user = null;
   return (
     <Container>
-      <MuiStyled.AppBar position="static" color="inherit">
+      <MuiStyled.AppBar color="inherit" position="sticky" top="10px">
         <Brand />
         <Toolbar user={user} />
       </MuiStyled.AppBar>

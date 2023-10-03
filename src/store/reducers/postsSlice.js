@@ -4,6 +4,7 @@ import {
 } from "./helpers/controlStatus";
 import { createSlice } from "@reduxjs/toolkit";
 import * as postsAPI from "store/thunks/posts.thunk";
+import { RouterHistory } from "config/router";
 
 const initialState = {
   posts: [],
@@ -55,6 +56,13 @@ const postsSlice = createSlice({
     resetPostDetails(state) {
       state.post = null;
       state.posts = [];
+    },
+
+    resetAllPostsPage(state) {
+      state.posts = [];
+      state.postsTotal = "";
+      state.currentPage = "";
+      state.numberOfPages = "";
     },
   },
   extraReducers: (builder) => {
@@ -109,7 +117,12 @@ const postsSlice = createSlice({
         state.deletePostLoadingStatus = status("pending");
       })
       .addCase(postsAPI.deletePostQuery.fulfilled, (state, { payload }) => {
-        state.posts = state.posts.filter((post) => post._id !== payload);
+        if (state.post && state.post._id === payload) {
+          state.post = null;
+          RouterHistory.navigate("/");
+        } else {
+          state.posts = state.posts.filter((post) => post._id !== payload);
+        }
         state.deletePostLoadingStatus = status("success");
       })
       .addCase(postsAPI.deletePostQuery.rejected, (state, { payload }) => {
@@ -124,22 +137,34 @@ const postsSlice = createSlice({
           (post) => post._id === payload.postId
         );
 
-        if (postIndex < 0) return;
+        if (postIndex < 0 && !state.post) return;
 
-        const post = state.posts[postIndex];
+        const post = state.post ? state.post : state.posts[postIndex];
 
         const reactionAlreadyExists = post.likes.some(
           (reaction) => reaction === payload.currentUserId
         );
 
-        if (reactionAlreadyExists) {
-          state.posts[postIndex].likes = post.likes.filter(
-            (reaction) => reaction !== payload.currentUserId
-          );
-          state.posts[postIndex].likeCount -= 1;
+        if (state.post) {
+          if (reactionAlreadyExists) {
+            state.post.likes = post.likes.filter(
+              (reaction) => reaction !== payload.currentUserId
+            );
+            state.post.likeCount -= 1;
+          } else {
+            state.post.likes.push(payload.currentUserId);
+            state.post.likeCount += 1;
+          }
         } else {
-          state.posts[postIndex].likes.push(payload.currentUserId);
-          state.posts[postIndex].likeCount += 1;
+          if (reactionAlreadyExists) {
+            state.posts[postIndex].likes = post.likes.filter(
+              (reaction) => reaction !== payload.currentUserId
+            );
+            state.posts[postIndex].likeCount -= 1;
+          } else {
+            state.posts[postIndex].likes.push(payload.currentUserId);
+            state.posts[postIndex].likeCount += 1;
+          }
         }
       })
       .addCase(postsAPI.likePostQuery.rejected, (state, { payload }) => {
