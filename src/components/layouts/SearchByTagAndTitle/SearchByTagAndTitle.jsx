@@ -4,10 +4,14 @@ import TagsInput from "react-tagsinput";
 import { TextField, Button } from "@mui/material";
 
 import "react-tagsinput/react-tagsinput.css";
-import "./styles/home.css";
-import * as MuiStyled from "./styles/home.styled";
+import "./searchByTagAndTitle.css";
+import * as MuiStyled from "./SearchByTagAndTitle.styled";
 
-export default function Search({ searchQuery, tagsQuery, onSearch }) {
+export default function SearchByTagAndTitle({
+  searchQuery,
+  tagsQuery,
+  onSearch,
+}) {
   const [search, setSearch] = useState(searchQuery || "");
   const [tags, setTags] = useState(tagsQuery?.split(",") || []);
 

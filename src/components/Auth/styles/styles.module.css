@@ -5,11 +5,11 @@
 
 .auth-form__anotation-box {
   font-size: 12px;
-  color: "#3d3d3d";
+  color: var(--app-gray);
 }
 
 .auth-form__anotation-box a {
-  color: #0466c8;
+  color: var(--app-sky-blue);
   font-weight: 700;
 }
 

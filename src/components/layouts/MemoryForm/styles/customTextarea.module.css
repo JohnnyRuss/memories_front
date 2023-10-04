@@ -1,0 +1,101 @@
+.customTextareaContainer {
+  width: 100%;
+  position: relative;
+}
+
+/* TEXTAREA LABEL */
+.customTextarea::placeholder {
+  opacity: 0;
+}
+
+.customTextareaContainer:has(.customTextarea:placeholder-shown)
+  > .customTextareaLabel {
+  z-index: 8;
+  inset: 0;
+  bottom: 48px;
+  padding-left: 12px;
+  padding-top: 16.5px;
+  line-height: 1.4;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: "Poppins", "Bebas Neue", sans-serif;
+  cursor: text;
+  transition: all 0.2s;
+  transform: translateY(0);
+}
+
+.customTextareaContainer:has(.customTextarea:focus) > .customTextareaLabel,
+.customTextareaContainer:has(.customTextarea:not(:placeholder-shown))
+  > .customTextareaLabel {
+  height: max-content;
+  width: max-content;
+  padding: 0 2px;
+  left: 12px;
+  top: 0;
+  transform: translateY(-50%);
+  line-height: 1;
+  background: var(--app-white);
+  font-size: 13px;
+}
+
+.customTextareaContainer:has(.customTextarea:focus) > .customTextareaLabel {
+  color: var(--app-sky-blue);
+}
+
+.customTextareaLabel {
+  position: absolute;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.customTextareaInnerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.textAreaWrapper {
+  padding: 16.5px 12px 5px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+}
+
+.customTextarea {
+  resize: none;
+  min-height: 56px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: transparent;
+  font-style: inherit;
+  font-family: inherit;
+  border: none;
+  outline: none;
+}
+
+.textAreaWrapper:hover {
+  border-color: rgba(0, 0, 0, 1);
+}
+
+.textAreaWrapper:has(.customTextarea:focus) {
+  outline: 2px solid;
+  outline-color: var(--app-sky-blue);
+  border: none;
+}
+
+.helperText {
+  text-align: center;
+  text-wrap: balance;
+  font-size: 12px;
+  margin-top: 0px;
+}
+
+.customTextareaContainer.error > .customTextareaLabel,
+.customTextareaContainer.error .helperText {
+  color: var(--app-red) !important;
+}
+
+.customTextareaContainer.error .textAreaWrapper {
+  border-color: var(--app-red) !important;
+}

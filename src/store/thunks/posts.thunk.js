@@ -7,6 +7,7 @@ export const createPostQuery = createAsyncThunk(
   async (args, { rejectWithValue }) => {
     try {
       const { data } = await axiosPrivateQuery.post("/posts", args);
+
       return data;
     } catch (error) {
       return rejectWithValue({
@@ -39,6 +40,7 @@ export const updatePostQuery = createAsyncThunk(
         `/posts/${args.params.postId}`,
         args.data
       );
+
       return data;
     } catch (error) {
       return rejectWithValue({

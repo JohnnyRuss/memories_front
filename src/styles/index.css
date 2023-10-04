@@ -1,9 +1,14 @@
 :root {
-  --app-ballet: #606c38;
   --app-salad: #52b69a;
-  --app-blue: #0466c8;
-  --app-blue-shade: #045cb4;
+  --app-sky-blue: #0466c8;
+  --app-blue: #000831;
+  --app-blue-shade: #000022;
   --app-red: #ef233c;
+  --app-white: #fff;
+  --app-gray: #333;
+  --app-gray-tint: #999;
+  --app-black: #111;
+  --app-black-05: rgba(0, 0, 0, 0.5);
 }
 
 body {

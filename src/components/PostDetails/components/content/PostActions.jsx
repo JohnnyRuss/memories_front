@@ -23,7 +23,7 @@ export default function PostActions({
   const { onDelete, onReaction, currentUserId, isAuthenticated } =
     usePostQuery(postId);
 
-  const { onOpenModal } = useModalContext();
+  const { onOpenModal, onClose } = useModalContext();
 
   return (
     <>
@@ -45,9 +45,10 @@ export default function PostActions({
             <Button
               onClick={() =>
                 onOpenModal({
-                  content: <MemoryForm />,
+                  content: <MemoryForm onDone={() => onClose()} />,
                   onOpen: onEdit,
                   onClose: onCancelEdit,
+                  modalStyles: { width: "500px" },
                 })
               }
             >

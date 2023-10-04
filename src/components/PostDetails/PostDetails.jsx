@@ -13,8 +13,6 @@ import { Spinner, Container } from "components/layouts";
 import PostContent from "./components/content/PostContent";
 import RelatedPosts from "./components/RelatedPosts";
 import Comments from "./components/comments/Comments";
-
-import { Divider } from "@mui/material";
 import * as MuiStyled from "./PostDetails.styled";
 
 export default function PostDetails() {
@@ -29,7 +27,7 @@ export default function PostDetails() {
 
     dispatch(
       getPostsQuery({
-        tags: post.tags,
+        tags: post.tags.join(","),
         page: 1,
       })
     );
@@ -47,17 +45,12 @@ export default function PostDetails() {
         {singlePostStatus.loading ? (
           <Spinner />
         ) : post ? (
-          <>
-            <PostContent post={post} />
-            <Divider style={{ margin: "20px 0" }} />
-          </>
+          <PostContent post={post} />
         ) : (
           <></>
         )}
 
         <Comments loading={singlePostStatus.loading} postId={post?._id || ""} />
-
-        <Divider style={{ margin: "20px 0" }} />
 
         <RelatedPosts />
       </MuiStyled.Paper>

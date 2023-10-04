@@ -20,11 +20,13 @@ export default function RelatedPosts(props) {
   const relatedPosts = useSelector(selectPosts);
 
   return (
-    <section>
+    <section className={styles.relatedPostsContainer}>
       {relatedPostsStatus.loading ? (
         <Spinner />
       ) : (
         <>
+          <Divider style={{ margin: "20px 0" }} />
+
           <Typography gutterBottom variant="h5">
             You might also like:
           </Typography>

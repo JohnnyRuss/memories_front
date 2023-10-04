@@ -1,19 +1,25 @@
 import { Link } from "react-router-dom";
 
 import { useCreatePostQuery } from "hooks/api";
-
 import { Controller } from "react-hook-form";
 
 import FileField from "./FileField";
+import CustomTextarea from "./CustomTextarea";
 import { Spinner } from "components/layouts";
+import MemoryFormActions from "./MemoryFormActions";
 import { TextField, Typography } from "@mui/material";
+import styles from "./styles/memoryForm.module.css";
 
-import * as MuiStyled from "./MemoryForm.styled";
-import styles from "./memoryForm.module.css";
+export default function MemoryForm({ onDone }) {
+  const {
+    isAuthenticated,
+    status,
+    form,
+    onFormHardReset,
+    onImageChange,
+    onSubmit,
+  } = useCreatePostQuery();
 
-export default function MemoryForm() {
-  const { isAuthenticated, status, form, onImageChange, onSubmit } =
-    useCreatePostQuery();
   const helperTextProps = { sx: { textAlign: "center" } };
 
   return (
@@ -21,7 +27,7 @@ export default function MemoryForm() {
       noValidate
       autoComplete="off"
       className={styles["post-form"]}
-      onSubmit={form.handleSubmit(onSubmit)}
+      onSubmit={form.handleSubmit(onSubmit.bind(this, onDone))}
     >
       {status.loading && <Spinner type="absolute" />}
 
@@ -50,17 +56,11 @@ export default function MemoryForm() {
         name="text"
         control={form.control}
         render={({ field, fieldState: { error } }) => (
-          <TextField
-            variant="outlined"
+          <CustomTextarea
             label="Text"
-            fullWidth
-            multiline
-            rows={4}
-            {...field}
-            {...form.register("text")}
+            fieldProps={{ ...field, ...form.register("text") }}
             error={error ? true : false}
             helperText={error?.message || ""}
-            FormHelperTextProps={helperTextProps}
           />
         )}
       />
@@ -100,27 +100,10 @@ export default function MemoryForm() {
         />
 
         {isAuthenticated ? (
-          <>
-            <MuiStyled.ClearButton
-              variant="contained"
-              size="small"
-              onClick={() => form.reset()}
-              fullWidth
-              disabled={status.loading}
-            >
-              Clear
-            </MuiStyled.ClearButton>
-
-            <MuiStyled.SubmitButton
-              variant="contained"
-              size="large"
-              type="submit"
-              fullWidth
-              disabled={status.loading}
-            >
-              Submit
-            </MuiStyled.SubmitButton>
-          </>
+          <MemoryFormActions
+            onFormHardReset={onFormHardReset}
+            loading={status.loading}
+          />
         ) : (
           <p className={styles["no-auth__msg"]}>
             Please&nbsp;

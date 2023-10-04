@@ -4,7 +4,7 @@ import Brand from "./Brand";
 import Toolbar from "./Toolbar";
 import { Container } from "components/layouts";
 
-import * as MuiStyled from "./styles/styles";
+import * as MuiStyled from "./styles/Navigation.styled";
 
 export default function Navigation() {
   const { pathname } = useLocation();

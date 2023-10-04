@@ -2,14 +2,20 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
+import { usePostQuery } from "hooks/api";
 import { postActions } from "store/reducers/postsSlice";
 
-import HomeAside from "./HomeAside";
 import { Grow, Grid } from "@mui/material";
+import HomeAside from "./HomeAside";
+import SearchOnMobile from "./SearchOnMobile";
+import CreatePostButton from "./CreatePostButton";
+import MobilePagination from "./MobilePagination";
 import { Container, PostsList } from "components/layouts";
 
 export default function Home() {
   const dispatch = useDispatch();
+
+  const { onSearch, searchQuery, tagsQuery, pageQuery } = usePostQuery();
 
   useEffect(() => {
     return () => {
@@ -26,13 +32,28 @@ export default function Home() {
             justifyContent="space-between"
             alignItems="stretch"
             spacing={4}
+            minHeight="90vh"
           >
-            <Grid item xs={12} sm={6} md={8}>
-              <PostsList />
+            <SearchOnMobile
+              onSearch={onSearch}
+              tagsQuery={tagsQuery}
+              searchQuery={searchQuery}
+            />
+
+            <CreatePostButton />
+
+            <Grid item xs={12} md={8}>
+              <PostsList page={pageQuery} />
             </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <HomeAside />
-            </Grid>
+
+            <HomeAside
+              onSearch={onSearch}
+              pageQuery={pageQuery}
+              searchQuery={searchQuery}
+              tagsQuery={tagsQuery}
+            />
+
+            <MobilePagination />
           </Grid>
         </Container>
       </div>

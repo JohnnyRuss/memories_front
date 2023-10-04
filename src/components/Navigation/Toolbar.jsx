@@ -8,7 +8,7 @@ import {
 import { logoutUserQuery } from "store/thunks/auth.thunk";
 
 import { Button } from "@mui/material";
-import * as MuiStyled from "./styles/styles";
+import * as MuiStyled from "./styles/Navigation.styled";
 import styles from "./styles/styles.module.css";
 
 export default function Toolbar() {

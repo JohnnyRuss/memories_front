@@ -5,3 +5,4 @@ export { default as MemoryForm } from "./MemoryForm/MemoryForm";
 export { default as PostsList } from "./PostsList/PostsList";
 export { default as PostCard } from "./PostCard/PostCard";
 export { default as Modal } from "./Modal/Modal";
+export { default as SearchByTagAndTitle } from "./SearchByTagAndTitle/SearchByTagAndTitle";

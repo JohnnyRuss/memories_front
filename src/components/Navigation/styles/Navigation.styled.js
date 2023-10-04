@@ -18,6 +18,10 @@ export const AppBar = styled(MuiAppBar)(({ theme }) => ({
 
 export const LogoTypography = styled(MuiTypography)(({ theme }) => ({
   color: theme.palette.app_blue,
+
+  "@media (max-width:500px)": {
+    display: "none",
+  },
 }));
 
 export const Toolbar = styled(MuiToolbar)(({ theme }) => ({

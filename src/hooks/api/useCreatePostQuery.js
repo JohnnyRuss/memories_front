@@ -50,12 +50,22 @@ export default function useCreatePostQuery() {
     };
   }
 
-  async function onSubmit(values) {
+  async function onSubmit(onDone, values) {
     if (!isAuthenticated) return navigate("/auth/sign-in");
+
+    const transformTags = () =>
+      values.tags
+        .split("#")
+        .filter((part) => part !== "")
+        .map((part) => part.replaceAll(",", ""))
+        .map((part) => part.trim());
 
     if (Object.values(editingPost)[0]) {
       await dispatch(
-        updatePostQuery({ params: { postId: editingPost._id }, data: values })
+        updatePostQuery({
+          params: { postId: editingPost._id },
+          data: { ...values, tags: transformTags() },
+        })
       ).unwrap();
 
       form.reset(defaultForm);
@@ -66,12 +76,19 @@ export default function useCreatePostQuery() {
       await dispatch(
         createPostQuery({
           ...values,
-          tags: values.tags.split("#").filter((part) => part !== ""),
+          tags: transformTags(),
           author: currentUserId,
         })
       ).unwrap();
       form.reset();
     }
+
+    onDone && onDone();
+  }
+
+  function onFormHardReset() {
+    dispatch(postActions.clearPostToEdit());
+    form.reset(defaultForm);
   }
 
   useEffect(() => {
@@ -85,5 +102,12 @@ export default function useCreatePostQuery() {
     });
   }, [editingPost]);
 
-  return { isAuthenticated, status, form, onImageChange, onSubmit };
+  return {
+    isAuthenticated,
+    status,
+    form,
+    onFormHardReset,
+    onImageChange,
+    onSubmit,
+  };
 }

@@ -1,4 +1,4 @@
-import styles from "./memoryForm.module.css";
+import styles from "./styles/memoryForm.module.css";
 
 export default function FileField({ value, onChange }) {
   return (

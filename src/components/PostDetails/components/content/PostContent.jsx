@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { postActions } from "store/reducers/postsSlice";
 
+import { Divider } from "@mui/material";
 import PostContentHead from "./PostContentHead";
 import PostContentBody from "./PostContentBody";
 import PostActions from "./PostActions";
@@ -8,6 +9,7 @@ import styles from "../../postDetails.module.css";
 
 export default function PostContent({ post }) {
   const dispatch = useDispatch();
+
   const onEdit = () => dispatch(postActions.setPostToEdit(post));
   const onCancelEdit = () => dispatch(postActions.clearPostToEdit());
 
@@ -30,6 +32,8 @@ export default function PostContent({ post }) {
         onEdit={onEdit}
         onCancelEdit={onCancelEdit}
       />
+
+      <Divider style={{ margin: "20px 0" }} />
     </div>
   );
 }

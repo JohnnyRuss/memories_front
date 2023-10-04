@@ -1,26 +1,29 @@
-import { usePostQuery } from "hooks/api";
+import {
+  MemoryForm,
+  Pagination,
+  SearchByTagAndTitle,
+} from "components/layouts";
+import { Grid } from "@mui/material";
 
-import Search from "./Search";
-import { Pagination, MemoryForm } from "components/layouts";
-
-import * as MuiStyled from "./styles/home.styled";
-
-export default function HomeAside() {
-  const { onSearch, searchQuery, tagsQuery, pageQuery } = usePostQuery();
-
+export default function HomeAside({
+  onSearch,
+  tagsQuery,
+  searchQuery,
+  pageQuery,
+}) {
   return (
-    <aside className="sidebar">
-      <Search
-        onSearch={onSearch}
-        tagsQuery={tagsQuery}
-        searchQuery={searchQuery}
-      />
+    <Grid item md={4} display={{ xs: "none", md: "block" }}>
+      <aside style={{ position: "sticky", top: "20px" }}>
+        <SearchByTagAndTitle
+          onSearch={onSearch}
+          tagsQuery={tagsQuery}
+          searchQuery={searchQuery}
+        />
 
-      <MemoryForm />
+        <MemoryForm />
 
-      <MuiStyled.PaginationPaper elevation={6}>
         <Pagination page={pageQuery} />
-      </MuiStyled.PaginationPaper>
-    </aside>
+      </aside>
+    </Grid>
   );
 }

@@ -28,12 +28,12 @@
 }
 
 .commentsListInnerContainer::-webkit-scrollbar-thumb {
-  background: #111;
+  background: var(--app-black);
   border-radius: 1rem;
 }
 
 .commentsListInnerContainer::-webkit-scrollbar-track {
-  background: #999;
+  background: var(--app-gray-tint);
   border-radius: 1rem;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .commentsListItemContentFooter span {
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--app-black-05);
   font-size: 12px;
 }
 
@@ -82,4 +82,28 @@
 .writeCommentBox {
   width: 50%;
   margin-left: auto;
+}
+
+@media (max-width: 500px) {
+  .commentsContainer {
+    order: 2;
+    flex-direction: column;
+  }
+
+  .commentsListContainer {
+    order: 1;
+  }
+
+  .commentsListContainer.halfWidth {
+    margin: 0;
+  }
+
+  .commentsListInnerContainer {
+    height: 400px;
+  }
+
+  .writeCommentBox {
+    order: 2;
+    width: 100%;
+  }
 }

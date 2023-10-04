@@ -102,8 +102,13 @@ const postsSlice = createSlice({
           (post) => post._id === payload._id
         );
 
-        if (updatedPostIndex < 0) return;
-        state.posts[updatedPostIndex] = payload;
+        const isActivePostOperation =
+          state.post && state.post._id === payload._id;
+
+        if (updatedPostIndex < 0 && !isActivePostOperation) return;
+
+        if (isActivePostOperation) state.post = payload;
+        else state.posts[updatedPostIndex] = payload;
 
         state.createPostLoadingStatus = status("success");
       })
@@ -117,12 +122,15 @@ const postsSlice = createSlice({
         state.deletePostLoadingStatus = status("pending");
       })
       .addCase(postsAPI.deletePostQuery.fulfilled, (state, { payload }) => {
-        if (state.post && state.post._id === payload) {
+        const isActivePostOperation = state.post && state.post._id === payload;
+
+        if (isActivePostOperation) {
           state.post = null;
           RouterHistory.navigate("/");
         } else {
           state.posts = state.posts.filter((post) => post._id !== payload);
         }
+
         state.deletePostLoadingStatus = status("success");
       })
       .addCase(postsAPI.deletePostQuery.rejected, (state, { payload }) => {
@@ -137,15 +145,20 @@ const postsSlice = createSlice({
           (post) => post._id === payload.postId
         );
 
-        if (postIndex < 0 && !state.post) return;
+        const isActivePostOperation =
+          state.post && state.post._id === payload.postId;
 
-        const post = state.post ? state.post : state.posts[postIndex];
+        if (postIndex < 0 && !isActivePostOperation) return;
+
+        const post = isActivePostOperation
+          ? state.post
+          : state.posts[postIndex];
 
         const reactionAlreadyExists = post.likes.some(
           (reaction) => reaction === payload.currentUserId
         );
 
-        if (state.post) {
+        if (isActivePostOperation) {
           if (reactionAlreadyExists) {
             state.post.likes = post.likes.filter(
               (reaction) => reaction !== payload.currentUserId
@@ -157,13 +170,13 @@ const postsSlice = createSlice({
           }
         } else {
           if (reactionAlreadyExists) {
+            state.posts[postIndex].likeCount -= 1;
             state.posts[postIndex].likes = post.likes.filter(
               (reaction) => reaction !== payload.currentUserId
             );
-            state.posts[postIndex].likeCount -= 1;
           } else {
-            state.posts[postIndex].likes.push(payload.currentUserId);
             state.posts[postIndex].likeCount += 1;
+            state.posts[postIndex].likes.push(payload.currentUserId);
           }
         }
       })

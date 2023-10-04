@@ -15,6 +15,8 @@ export default function PostDetailsPage() {
   useEffect(() => {
     if (!postId) return;
 
+    window.scrollTo({ top: 0 });
+
     dispatch(getPostQuery({ postId }));
     dispatch(getPostCommentsQuery({ postId }));
   }, [postId]);

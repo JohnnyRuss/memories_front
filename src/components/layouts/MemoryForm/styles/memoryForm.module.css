@@ -3,12 +3,13 @@
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   gap: 16px;
   padding: 15px;
   position: relative;
-  background: #fff;
+  background: var(--app-white);
   border-radius: 5px;
+  overflow: hidden;
 }
 
 .post-form__btn-box {
@@ -20,14 +21,14 @@
   margin: 10px 0;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .post-form__file-field label {
   width: 97%;
   text-align: center;
   font-weight: 300;
-  color: #fff;
+  color: var(--app-white);
   background: var(--app-salad);
   font-size: 14px;
   border-radius: 3px;
@@ -56,8 +57,8 @@
   text-wrap: balance;
   font-size: 14px;
   font-weight: 600;
-  color: #fff;
-  background: #000831;
+  color: var(--app-white);
+  background: var(--app-blue);
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }

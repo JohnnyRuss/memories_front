@@ -2,16 +2,14 @@ import { Link } from "react-router-dom";
 
 import LogoImage from "assets/logo.png";
 
-import * as MuiStyled from "./styles/styles";
+import * as MuiStyled from "./styles/Navigation.styled";
 import styles from "./styles/styles.module.css";
 
 export default function Brand() {
   return (
-    <div className={styles.brand_container}>
+    <Link to="/" className={styles.brand_container}>
       <MuiStyled.LogoTypography
         variant="h2"
-        component={Link}
-        to="/"
         align="center"
         fontFamily="bebas neue"
       >
@@ -25,6 +23,6 @@ export default function Brand() {
         height="50"
         width="50"
       />
-    </div>
+    </Link>
   );
 }
