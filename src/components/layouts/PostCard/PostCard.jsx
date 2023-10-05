@@ -25,7 +25,7 @@ export default function PostCard({ post }) {
   };
 
   return (
-    <MuiStyled.Card>
+    <MuiStyled.Card elevation={6}>
       {deletingPostId === post._id && status.loading && (
         <Spinner type="absolute" />
       )}

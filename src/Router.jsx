@@ -7,11 +7,15 @@ export default function Router() {
     <Suspense fallback={null}>
       <Routes>
         {AppRouter.map((route) => (
-          <Route
-            key={route.name}
-            path={route.path}
-            element={route.Element}
-          ></Route>
+          <Route key={route.name} path={route.path} element={route.Element}>
+            {route.children.map((childRoute) => (
+              <Route
+                key={childRoute.name}
+                path={childRoute.path}
+                element={childRoute.Element}
+              ></Route>
+            ))}
+          </Route>
         ))}
       </Routes>
     </Suspense>

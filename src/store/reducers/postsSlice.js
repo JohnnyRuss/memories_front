@@ -221,6 +221,39 @@ const postsSlice = createSlice({
         console.log(payload);
         state.postsLoadingStatus = status("fail", payload.message);
       });
+    builder
+      .addCase(postsAPI.getUserMemoriesQuery.pending, (state) => {
+        state.postsLoadingStatus = status("pending");
+      })
+      .addCase(
+        postsAPI.getUserMemoriesQuery.fulfilled,
+        (state, { payload }) => {
+          state.posts = payload;
+          state.postsLoadingStatus = status("success");
+        }
+      )
+      .addCase(postsAPI.getUserMemoriesQuery.rejected, (state, { payload }) => {
+        console.log(payload);
+        state.postsLoadingStatus = status("fail", payload.message);
+      });
+    builder
+      .addCase(postsAPI.getUserLikedMemoriesQuery.pending, (state) => {
+        state.postsLoadingStatus = status("pending");
+      })
+      .addCase(
+        postsAPI.getUserLikedMemoriesQuery.fulfilled,
+        (state, { payload }) => {
+          state.posts = payload;
+          state.postsLoadingStatus = status("success");
+        }
+      )
+      .addCase(
+        postsAPI.getUserLikedMemoriesQuery.rejected,
+        (state, { payload }) => {
+          console.log(payload);
+          state.postsLoadingStatus = status("fail", payload.message);
+        }
+      );
   },
 });
 

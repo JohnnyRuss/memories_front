@@ -114,3 +114,37 @@ export const searchPosts = createAsyncThunk(
     }
   }
 );
+
+export const getUserMemoriesQuery = createAsyncThunk(
+  "posts/user-memories",
+  async (args, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPublicQuery.get(
+        `/posts/${args.userId}/memories`
+      );
+
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        message: error?.response?.data || error?.message || error,
+      });
+    }
+  }
+);
+
+export const getUserLikedMemoriesQuery = createAsyncThunk(
+  "posts/user-liked-memories",
+  async (args, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPublicQuery.get(
+        `/posts/${args.userId}/liked-memories`
+      );
+
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        message: error?.response?.data || error?.message || error,
+      });
+    }
+  }
+);

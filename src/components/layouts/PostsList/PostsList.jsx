@@ -21,7 +21,7 @@ export default function PostsList({
   const status = useSelector(selectPostsLoadingStatus);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !page) return;
     containerRef.current.scrollIntoView({ top: 0 });
   }, [page]);
 
@@ -29,7 +29,7 @@ export default function PostsList({
     <div>
       {status.loading && <Spinner />}
 
-      <Grid container spacing={2} ref={containerRef}>
+      <Grid container spacing={3} ref={containerRef}>
         {!status.loading &&
           posts?.[0] &&
           posts.map((post) => (

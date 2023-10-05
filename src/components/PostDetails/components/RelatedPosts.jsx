@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import {
   selectPosts,
@@ -59,7 +59,15 @@ export default function RelatedPosts(props) {
                     >
                       {relatedPost.title}
                     </Typography>
-                    <Typography gutterBottom variant="subtitle2">
+                    <Typography
+                      gutterBottom
+                      variant="subtitle2"
+                      textTransform="capitalize"
+                      component={Link}
+                      to={`/user/${relatedPost.author._id}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="underline"
+                    >
                       {relatedPost.author.name}
                     </Typography>
                   </div>

@@ -1,4 +1,5 @@
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 import { Typography } from "@mui/material";
 import styles from "../../postDetails.module.css";
@@ -17,7 +18,12 @@ export default function PostContentHead({ title, author, createdAt, tags }) {
         style={{ display: "flex", alignItems: "center" }}
       >
         By:&nbsp;
-        <span className={styles.postAuthorName}>{author.name}</span>
+        <Link
+          to={`/user/${author._id}`}
+          className={`underline ${styles.postAuthorName}`}
+        >
+          {author.name}
+        </Link>
         &nbsp;&mdash;&nbsp;
         <span className={styles.postCreationDate}>
           {moment(createdAt).fromNow()}
