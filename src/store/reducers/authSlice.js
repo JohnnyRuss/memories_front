@@ -17,6 +17,12 @@ const initialState = {
     name: "",
     email: "",
   },
+
+  profileInfo: {
+    _id: "",
+    name: "",
+    email: "",
+  },
 };
 
 const authSlice = createSlice({
@@ -97,6 +103,26 @@ const authSlice = createSlice({
       .addCase(authAPI.logoutUserQuery.rejected, (state, { payload }) => {
         state.loadingStatus = status("fail", payload.message);
       });
+    builder
+      .addCase(
+        authAPI.getUserProfileInfoQuery.pending,
+        (state, { payload }) => {
+          state.loadingStatus = status("pending");
+        }
+      )
+      .addCase(
+        authAPI.getUserProfileInfoQuery.fulfilled,
+        (state, { payload }) => {
+          state.profileInfo = payload;
+          state.loadingStatus = status("success");
+        }
+      )
+      .addCase(
+        authAPI.getUserProfileInfoQuery.rejected,
+        (state, { payload }) => {
+          state.loadingStatus = status("fail", payload.message);
+        }
+      );
   },
 });
 

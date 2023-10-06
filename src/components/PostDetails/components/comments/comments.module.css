@@ -90,6 +90,10 @@
     flex-direction: column;
   }
 
+  .commentsListInnerContainer.empty {
+    height: 90px;
+  }
+
   .commentsListContainer {
     order: 1;
   }

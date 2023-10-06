@@ -20,7 +20,11 @@ const CommentsList = forwardRef(({ isAuthenticated }, ref) => {
         Comments
       </Typography>
 
-      <div className={styles.commentsListInnerContainer}>
+      <div
+        className={`${styles.commentsListInnerContainer} ${
+          comments[0] ? "" : styles.empty
+        }`}
+      >
         {comments[0] ? (
           <>
             {comments.map((comment) => (

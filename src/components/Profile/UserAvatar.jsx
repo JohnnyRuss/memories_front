@@ -1,16 +1,29 @@
+import { useSelector } from "react-redux";
+
+import {
+  selectProfileInfo,
+  selectUserStatus,
+} from "store/selectors/authSelectors";
+
 import { Avatar } from "components/layouts";
+import UserAvatarSkeleton from "./UserAvatarSkeleton";
 import styles from "./profile.module.css";
 
 export default function UserAvatar() {
-  return (
+  const user = useSelector(selectProfileInfo);
+  const status = useSelector(selectUserStatus);
+
+  return status.loading ? (
+    <UserAvatarSkeleton />
+  ) : (
     <figure className={styles.profileHeaderFig}>
-      <Avatar username="john russ" />
+      <Avatar username={user.name} />
 
       <figcaption className={styles.profileHeaderFigCaption}>
         <strong className={styles.profileHeaderFigName}>
-          <span>John Russ</span>
+          <span>{user.name}</span>
         </strong>
-        <span className={styles.profileHeaderFigEmail}>russ@io.com</span>
+        <span className={styles.profileHeaderFigEmail}>{user.email}</span>
       </figcaption>
     </figure>
   );

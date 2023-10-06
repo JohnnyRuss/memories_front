@@ -1,17 +1,8 @@
-import { useModalContext } from "providers/ModalProvider";
-
+import { useCreateMemory } from "hooks/utils";
 import { Grid, Button } from "@mui/material";
-import { MemoryForm } from "components/layouts";
 
 export default function CreatePostButton() {
-  const { onOpenModal, onClose } = useModalContext();
-
-  function onCreateMemory() {
-    onOpenModal({
-      content: <MemoryForm onDone={() => onClose()} />,
-      modalStyles: { width: "500px" },
-    });
-  }
+  const { onOpenCreateMemoryModal } = useCreateMemory();
 
   return (
     <Grid
@@ -21,7 +12,7 @@ export default function CreatePostButton() {
       alignSelf="start"
       sx={{ marginTop: "-15px" }}
     >
-      <Button variant="contained" fullWidth onClick={onCreateMemory}>
+      <Button variant="contained" fullWidth onClick={onOpenCreateMemoryModal}>
         Create Memory
       </Button>
     </Grid>

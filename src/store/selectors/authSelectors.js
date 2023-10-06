@@ -12,7 +12,13 @@ const selectedCurrentUser = ({ auth }) => ({
   name: auth.user.name,
 });
 
-export const selectAuthStatus = createSelector(
+const selectedProfileInfo = ({ auth }) => ({
+  _id: auth.profileInfo._id,
+  email: auth.profileInfo.email,
+  name: auth.profileInfo.name,
+});
+
+export const selectUserStatus = createSelector(
   selectedAuthStatus,
   (status) => status
 );
@@ -20,6 +26,11 @@ export const selectAuthStatus = createSelector(
 export const selectCurrentUser = createSelector(
   selectedCurrentUser,
   (user) => user
+);
+
+export const selectProfileInfo = createSelector(
+  selectedProfileInfo,
+  (profileInfo) => profileInfo
 );
 
 export const selectIsAuthenticated = ({ auth }) => auth.isAuthenticated;

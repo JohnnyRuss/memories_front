@@ -90,7 +90,13 @@ export default function UserButton() {
                   <MenuItem onClick={handleClose}>
                     <Button
                       onClick={onLogout}
-                      sx={{ padding: 0, width: "100%" }}
+                      sx={{
+                        padding: "0px",
+                        width: "100%",
+                        textAlign: "start",
+                        justifyContent: "flex-start",
+                        textTransform: "capitalize",
+                      }}
                     >
                       Logout
                     </Button>

@@ -8,7 +8,7 @@ import MemoryForm from "../MemoryForm/MemoryForm";
 import { Upgrade } from "@mui/icons-material";
 import styles from "./styles/postCard.module.css";
 
-export default function UpdateButton({ post }) {
+export default function UpdateButton({ post, openModalOnUpdate = true }) {
   const dispatch = useDispatch();
 
   const { onOpenModal, onClose } = useModalContext();
@@ -18,9 +18,8 @@ export default function UpdateButton({ post }) {
 
   const onEdit = (e) => {
     e.stopPropagation();
-    dispatch(postActions.setPostToEdit(post));
 
-    if (window.innerWidth <= 500)
+    if (window.innerWidth <= 500 || openModalOnUpdate)
       onOpenModal({
         content: <MemoryForm onDone={() => onClose()} />,
         onOpen: setPostToUpdate,

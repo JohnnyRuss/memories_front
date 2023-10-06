@@ -43,7 +43,11 @@ export default function Home() {
             <CreatePostButton />
 
             <Grid item xs={12} md={8}>
-              <PostsList page={pageQuery} />
+              <PostsList
+                page={pageQuery}
+                openModalOnUpdate={false}
+                skeletonsLength={12}
+              />
             </Grid>
 
             <HomeAside

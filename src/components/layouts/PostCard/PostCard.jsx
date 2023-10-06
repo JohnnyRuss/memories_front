@@ -12,7 +12,11 @@ import PostCardContent from "./PostCardContent";
 import PostCardAuthorAndDate from "./PostCardAuthorAndDate";
 import * as MuiStyled from "./styles/PostCard.styled";
 
-export default function PostCard({ post }) {
+export default function PostCard({
+  post,
+  openModalOnUpdate,
+  showActionButtons = true,
+}) {
   const navigate = useNavigate();
 
   const { deletingPostId, status } = useSelector(selectDeletePostLoadingStatus);
@@ -29,6 +33,7 @@ export default function PostCard({ post }) {
       {deletingPostId === post._id && status.loading && (
         <Spinner type="absolute" />
       )}
+
       <MuiStyled.ButtonBase component="span" onClick={onOpenPost}>
         <MuiStyled.CardMedia image={post.image} title={post.title} />
 
@@ -37,7 +42,9 @@ export default function PostCard({ post }) {
           createdAt={post.createdAt}
         />
 
-        {isCurrentUser && <UpdateButton post={post} />}
+        {isCurrentUser && showActionButtons && (
+          <UpdateButton post={post} openModalOnUpdate={openModalOnUpdate} />
+        )}
 
         <PostCardContent tags={post.tags} title={post.title} text={post.text} />
       </MuiStyled.ButtonBase>
@@ -49,6 +56,7 @@ export default function PostCard({ post }) {
           likeCount={post.likeCount}
           currentUserId={currentUserId}
           isCurrentUser={isCurrentUser}
+          showActionButtons={showActionButtons}
         />
       )}
     </MuiStyled.Card>

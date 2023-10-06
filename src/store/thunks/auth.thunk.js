@@ -42,3 +42,18 @@ export const logoutUserQuery = createAsyncThunk(
     }
   }
 );
+
+export const getUserProfileInfoQuery = createAsyncThunk(
+  "user/profile-info",
+  async (args, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPublicQuery.get(`/users/${args.userId}`);
+
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        message: error?.response.data || error?.message || error,
+      });
+    }
+  }
+);

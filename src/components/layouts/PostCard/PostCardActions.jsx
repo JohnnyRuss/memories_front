@@ -10,6 +10,7 @@ export default function PostCardActions({
   likeCount,
   currentUserId,
   isCurrentUser,
+  showActionButtons,
 }) {
   const { onDelete, onReaction } = usePostQuery(postId);
 
@@ -23,7 +24,7 @@ export default function PostCardActions({
         )}
         <span className="text">like {likeCount}</span>
       </Button>
-      {isCurrentUser && (
+      {isCurrentUser && showActionButtons && (
         <Button size="small" onClick={onDelete} color="error">
           <Delete />
           <span className="text">delete</span>

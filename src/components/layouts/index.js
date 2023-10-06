@@ -4,6 +4,7 @@ export { default as Pagination } from "./Pagination/Pagination";
 export { default as MemoryForm } from "./MemoryForm/MemoryForm";
 export { default as PostsList } from "./PostsList/PostsList";
 export { default as PostCard } from "./PostCard/PostCard";
+export { default as PostCardSkeleton } from "./PostCard/PostCardSkeleton";
 export { default as Modal } from "./Modal/Modal";
 export { default as SearchByTagAndTitle } from "./SearchByTagAndTitle/SearchByTagAndTitle";
 export { default as Avatar } from "./Avatar/Avatar";
