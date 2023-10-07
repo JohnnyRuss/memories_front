@@ -4,10 +4,11 @@ import { useSelector } from "react-redux";
 import { selectComments } from "store/selectors/commentSelectors";
 
 import Comment from "./Comment";
+import CommentsSkeleton from "./CommentsSkeleton";
 import { Typography } from "@mui/material";
 import styles from "./comments.module.css";
 
-const CommentsList = forwardRef(({ isAuthenticated }, ref) => {
+const CommentsList = forwardRef(({ isAuthenticated, loading }, ref) => {
   const comments = useSelector(selectComments);
 
   return (
@@ -25,7 +26,9 @@ const CommentsList = forwardRef(({ isAuthenticated }, ref) => {
           comments[0] ? "" : styles.empty
         }`}
       >
-        {comments[0] ? (
+        {loading ? (
+          <CommentsSkeleton />
+        ) : comments?.[0] ? (
           <>
             {comments.map((comment) => (
               <Comment
@@ -42,9 +45,8 @@ const CommentsList = forwardRef(({ isAuthenticated }, ref) => {
             variant="h6"
             align="center"
             marginTop="30px"
-            textAlign="center"
             color="rgba(0,0,0,0.5)"
-            style={{ width: "100%" }}
+            className="no-result__msg"
           >
             There are no comments yet.
           </Typography>

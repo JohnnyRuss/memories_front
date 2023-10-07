@@ -6,8 +6,7 @@ import ProfileHeader from "./ProfileHeader";
 import styles from "./profile.module.css";
 
 const StyledPaper = styled(Paper)(() => ({
-  padding: "18px 8px",
-  height: "65vh",
+  height: "70vh",
   overflowY: "auto",
 
   "::-webkit-scrollbar": {

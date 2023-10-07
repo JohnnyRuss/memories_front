@@ -98,7 +98,7 @@ const authSlice = createSlice({
 
         state.loadingStatus = status("success");
 
-        RouterHistory.navigate("/");
+        RouterHistory.navigate("/posts");
       })
       .addCase(authAPI.logoutUserQuery.rejected, (state, { payload }) => {
         state.loadingStatus = status("fail", payload.message);

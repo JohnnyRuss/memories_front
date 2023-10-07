@@ -203,6 +203,7 @@ const postsSlice = createSlice({
         console.log(payload);
         state.postsLoadingStatus = status("fail", payload.message);
       });
+    // SEARCH POSTS
     builder
       .addCase(postsAPI.searchPosts.pending, (state) => {
         state.postsLoadingStatus = status("pending");
@@ -221,6 +222,7 @@ const postsSlice = createSlice({
         console.log(payload);
         state.postsLoadingStatus = status("fail", payload.message);
       });
+    // GET USER MEMORIES
     builder
       .addCase(postsAPI.getUserMemoriesQuery.pending, (state) => {
         state.postsLoadingStatus = status("pending");
@@ -236,6 +238,7 @@ const postsSlice = createSlice({
         console.log(payload);
         state.postsLoadingStatus = status("fail", payload.message);
       });
+    // GET USER LIKED MEMORIES
     builder
       .addCase(postsAPI.getUserLikedMemoriesQuery.pending, (state) => {
         state.postsLoadingStatus = status("pending");

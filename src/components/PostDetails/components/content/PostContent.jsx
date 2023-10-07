@@ -5,15 +5,18 @@ import { Divider } from "@mui/material";
 import PostContentHead from "./PostContentHead";
 import PostContentBody from "./PostContentBody";
 import PostActions from "./PostActions";
+import PostContentSkeleton from "./PostContentSkeleton";
 import styles from "../../postDetails.module.css";
 
-export default function PostContent({ post }) {
+export default function PostContent({ post, loading }) {
   const dispatch = useDispatch();
 
   const onEdit = () => dispatch(postActions.setPostToEdit(post));
   const onCancelEdit = () => dispatch(postActions.clearPostToEdit());
 
-  return (
+  return loading ? (
+    <PostContentSkeleton />
+  ) : post ? (
     <div className={styles.postDetailsSection}>
       <PostContentHead
         title={post.title}
@@ -35,5 +38,7 @@ export default function PostContent({ post }) {
 
       <Divider style={{ margin: "20px 0" }} />
     </div>
+  ) : (
+    <></>
   );
 }

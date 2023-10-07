@@ -6,11 +6,11 @@ export default function FormDivider({ question, answer, route }) {
     <div className={styles["auth-form__anotation-box"]}>
       <span>{question}</span>&nbsp;
       <Link to={route}>{answer}</Link>
-      <div data-divider>
+      {/* <div data-divider>
         <hr />
         or
         <hr />
-      </div>
+      </div> */}
     </div>
   );
 }

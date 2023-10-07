@@ -9,9 +9,9 @@ import {
 import { getPostsQuery } from "store/thunks/posts.thunk";
 import { postActions } from "store/reducers/postsSlice";
 
-import { Spinner, Container } from "components/layouts";
+import { Container } from "components/layouts";
 import PostContent from "./components/content/PostContent";
-import RelatedPosts from "./components/RelatedPosts";
+import RelatedPosts from "./components/RelatedPosts/RelatedPosts";
 import Comments from "./components/comments/Comments";
 import * as MuiStyled from "./PostDetails.styled";
 
@@ -42,13 +42,7 @@ export default function PostDetails() {
   return (
     <Container>
       <MuiStyled.Paper elevation={6}>
-        {singlePostStatus.loading ? (
-          <Spinner />
-        ) : post ? (
-          <PostContent post={post} />
-        ) : (
-          <></>
-        )}
+        <PostContent post={post} loading={singlePostStatus.loading} />
 
         <Comments loading={singlePostStatus.loading} postId={post?._id || ""} />
 

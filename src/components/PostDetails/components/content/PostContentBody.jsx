@@ -10,6 +10,7 @@ export default function PostContentBody({ text, image, title }) {
       <div className={styles.postContentBody}>
         <div className={styles.postText}>
           <PostImage image={image} title={title} />
+
           <Typography gutterBottom variant="body1" component="div">
             {text.split("\n").map((fragment) => (
               <p key={nanoid()} className={styles.postTextParagraph}>
@@ -17,6 +18,7 @@ export default function PostContentBody({ text, image, title }) {
               </p>
             ))}
           </Typography>
+
           <div className={styles.clearFix} />
         </div>
       </div>

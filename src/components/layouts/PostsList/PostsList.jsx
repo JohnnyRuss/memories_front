@@ -30,16 +30,19 @@ export default function PostsList({
   return (
     <Grid
       container
-      spacing={3}
       ref={containerRef}
       bgcolor="#fff"
+      spacing={3}
       sx={{
-        padding: 0,
+        paddingRight: "24px",
+        paddingBottom: "24px",
         margin: 0,
         width: "100%",
+        // gap: "24px",
+        borderRadius: "5px",
       }}
     >
-      {!status.loading && posts[0]
+      {!status.loading
         ? posts.map((post) => (
             <Grid key={post._id} item {...gridProps}>
               <PostCard

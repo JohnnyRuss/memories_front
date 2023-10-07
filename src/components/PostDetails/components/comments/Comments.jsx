@@ -13,12 +13,18 @@ export default function Comments({ loading, postId }) {
 
   return (
     <div className={styles.commentsContainer}>
-      {!loading && (
-        <CommentsList isAuthenticated={isAuthenticated} ref={commentRef} />
-      )}
+      <CommentsList
+        isAuthenticated={isAuthenticated}
+        ref={commentRef}
+        loading={loading}
+      />
 
       {isAuthenticated && (
-        <WriteComment postId={postId} commentRef={commentRef} />
+        <WriteComment
+          postId={postId}
+          commentRef={commentRef}
+          loading={loading}
+        />
       )}
     </div>
   );

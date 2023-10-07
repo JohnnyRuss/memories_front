@@ -1,6 +1,6 @@
 import { Skeleton, Box, Typography } from "@mui/material";
 
-export default function PostCardSkeleton(props) {
+export default function PostCardSkeleton() {
   return (
     <Box>
       <Skeleton
