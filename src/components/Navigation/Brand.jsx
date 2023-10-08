@@ -12,6 +12,7 @@ export default function Brand() {
         variant="h2"
         align="center"
         fontFamily="bebas neue"
+        sx={{ textDecoration: "underline" }}
       >
         MEMORIES
       </MuiStyled.LogoTypography>
